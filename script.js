@@ -44,7 +44,7 @@ const EDICOES_COPA = [
   { ano: 2014, sede: "Brasil", campeao: "Alemanha", vice: "Argentina", placar: "1 x 0", selecoes: 32, artilheiro: "James Rodriguez (6)", nota: "Gotze decide na prorrogacao. O historico 7 x 1 sobre o Brasil na semi." },
   { ano: 2018, sede: "Russia", campeao: "Franca", vice: "Croacia", placar: "4 x 2", selecoes: 32, artilheiro: "Harry Kane (6)", nota: "Segundo titulo frances, com a geracao de Mbappe, Griezmann e Pogba." },
   { ano: 2022, sede: "Catar", campeao: "Argentina", vice: "Franca", placar: "3 x 3 (4x2 pen)", selecoes: 32, artilheiro: "Kylian Mbappe (8)", nota: "A consagracao de Messi. Final considerada uma das melhores da historia." },
-  { ano: 2026, sede: "EUA / Canada / Mexico", campeao: "A definir", vice: "A definir", placar: "-", selecoes: 48, artilheiro: "A definir", nota: "Primeira edicao com 48 selecoes e tres paises-sede. Inicio previsto para junho de 2026." },
+  { ano: 2026, sede: "EUA / Canada / Mexico", campeao: "Espanha", vice: "Argentina", placar: "1 x 0", selecoes: 48, artilheiro: "Kylian Mbappé", nota: "Primeira edicao com 48 selecoes e tres paises-sede. Inicio previsto para junho de 2026." },
 ];
 
 /* ---------------------------------------------------------------------
