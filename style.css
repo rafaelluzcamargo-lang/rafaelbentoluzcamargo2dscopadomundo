@@ -1,1 +1,493 @@
+/* =====================================================================
+   style.css - Estilos do site "Copa do Mundo: da criacao a 2026"
+   CSS3 puro, sem frameworks. Design responsivo mobile-first.
+   ===================================================================== */
+
+/* ---------- Variaveis de tema (paleta de 5 cores) ---------- */
+:root {
+  --verde: #0b6b3a;        /* cor de marca principal (gramado) */
+  --verde-escuro: #084a29; /* variacao escura para topo/rodape */
+  --dourado: #e0b04a;      /* acento (taca / destaque) */
+  --areia: #f6f4ee;        /* fundo claro / neutro */
+  --grafite: #1c2321;      /* texto principal escuro */
+  --branco: #ffffff;
+  --cinza: #6b7280;        /* texto secundario */
+  --borda: #e2e0d8;
+  --radius: 12px;
+  --sombra: 0 6px 20px rgba(8, 74, 41, 0.12);
+}
+
+/* ---------- Reset basico ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--areia);
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--grafite);
+  line-height: 1.6;
+  background: var(--areia);
+}
+
+/* ---------- Cabecalho / navegacao ---------- */
+header.topo {
+  background: linear-gradient(135deg, var(--verde-escuro), var(--verde));
+  color: var(--branco);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--sombra);
+}
+
+.nav-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 14px 20px;
+  gap: 12px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: 0.3px;
+}
+
+.logo .bola {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--dourado);
+  color: var(--verde-escuro);
+  font-size: 1.1rem;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+nav a {
+  color: var(--branco);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+nav a:hover,
+nav a:focus-visible {
+  background: rgba(255, 255, 255, 0.18);
+  outline: none;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  background: linear-gradient(135deg, var(--verde-escuro), var(--verde));
+  color: var(--branco);
+  text-align: center;
+  padding: 64px 20px 72px;
+}
+
+.hero h1 {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  max-width: 800px;
+  margin: 0 auto 16px;
+  text-wrap: balance;
+}
+
+.hero p {
+  max-width: 620px;
+  margin: 0 auto 28px;
+  font-size: 1.05rem;
+  opacity: 0.95;
+  text-wrap: pretty;
+}
+
+.hero .selo {
+  display: inline-block;
+  background: var(--dourado);
+  color: var(--verde-escuro);
+  font-weight: 800;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+}
+
+/* ---------- Estrutura de secoes ---------- */
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+section {
+  padding: 48px 0;
+  border-bottom: 1px solid var(--borda);
+  scroll-margin-top: 80px;
+}
+
+section:last-child {
+  border-bottom: none;
+}
+
+.section-titulo {
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  color: var(--verde-escuro);
+  margin-bottom: 8px;
+  text-wrap: balance;
+}
+
+.section-sub {
+  color: var(--cinza);
+  margin-bottom: 28px;
+  max-width: 700px;
+  text-wrap: pretty;
+}
+
+/* ---------- Linha do tempo (Historia) ---------- */
+.timeline {
+  position: relative;
+  margin-left: 8px;
+  padding-left: 26px;
+  border-left: 3px solid var(--dourado);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 24px;
+  background: var(--branco);
+  border: 1px solid var(--borda);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -35px;
+  top: 20px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--verde);
+  border: 3px solid var(--dourado);
+}
+
+.timeline-item .ano {
+  display: inline-block;
+  background: var(--verde);
+  color: var(--branco);
+  font-weight: 800;
+  padding: 2px 12px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+.timeline-item h3 {
+  color: var(--verde-escuro);
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+}
+
+.timeline-item .meta {
+  font-size: 0.9rem;
+  color: var(--cinza);
+  margin-bottom: 6px;
+}
+
+/* ---------- Cartoes / grids ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 900px) {
+  .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+.card {
+  background: var(--branco);
+  border: 1px solid var(--borda);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.card h3 {
+  color: var(--verde-escuro);
+  margin-bottom: 8px;
+  font-size: 1.05rem;
+}
+
+/* ---------- Abas (Recordes) ---------- */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.tab-btn {
+  background: var(--branco);
+  border: 1px solid var(--borda);
+  color: var(--grafite);
+  font-weight: 600;
+  padding: 9px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+  border-color: var(--verde);
+}
+
+.tab-btn.ativa {
+  background: var(--verde);
+  color: var(--branco);
+  border-color: var(--verde);
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.ativo {
+  display: block;
+  animation: fade 0.3s ease;
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.recorde-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--borda);
+}
+
+.recorde-item:last-child { border-bottom: none; }
+
+.recorde-item .nome { font-weight: 700; }
+.recorde-item .detalhe { font-size: 0.85rem; color: var(--cinza); }
+
+.recorde-item .marca {
+  background: var(--dourado);
+  color: var(--verde-escuro);
+  font-weight: 800;
+  padding: 3px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+  font-size: 0.85rem;
+}
+
+/* ---------- Filtro / busca (Jogos dos Campeoes) ---------- */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.filtros input,
+.filtros select {
+  padding: 10px 14px;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-family: inherit;
+  background: var(--branco);
+  color: var(--grafite);
+  flex: 1 1 200px;
+}
+
+.filtros input:focus,
+.filtros select:focus {
+  outline: 2px solid var(--verde);
+  outline-offset: 1px;
+}
+
+/* ---------- Cartao de jogo ---------- */
+.jogo {
+  background: var(--branco);
+  border: 1px solid var(--borda);
+  border-left: 5px solid var(--verde);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 16px;
+}
+
+.jogo-cabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.jogo-cabecalho .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.tag.pais { background: var(--verde); color: var(--branco); }
+.tag.fase { background: var(--areia); color: var(--verde-escuro); border: 1px solid var(--borda); }
+.tag.ano { background: var(--dourado); color: var(--verde-escuro); }
+
+.jogo-placar {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--verde-escuro);
+}
+
+.jogo-local {
+  font-size: 0.88rem;
+  color: var(--cinza);
+  margin-bottom: 12px;
+}
+
+.jogo-detalhes {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 700px) {
+  .jogo-detalhes { grid-template-columns: repeat(2, 1fr); }
+}
+
+.detalhe-bloco h4 {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--verde);
+  margin-bottom: 4px;
+}
+
+.detalhe-bloco ul {
+  list-style: none;
+  font-size: 0.9rem;
+}
+
+.detalhe-bloco li {
+  padding: 2px 0 2px 16px;
+  position: relative;
+}
+
+.detalhe-bloco li::before {
+  content: "\2022";
+  position: absolute;
+  left: 0;
+  color: var(--dourado);
+  font-weight: 800;
+}
+
+.sem-resultado {
+  text-align: center;
+  color: var(--cinza);
+  padding: 30px;
+  font-style: italic;
+}
+
+/* ---------- Formato / regras ---------- */
+.formato-card .num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--dourado);
+  color: var(--verde-escuro);
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+/* ---------- Rodape ---------- */
+footer {
+  background: var(--verde-escuro);
+  color: var(--branco);
+  text-align: center;
+  padding: 30px 20px;
+  font-size: 0.9rem;
+}
+
+footer a { color: var(--dourado); }
+
+/* ---------- Botao voltar ao topo ---------- */
+#voltar-topo {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  background: var(--verde);
+  color: var(--branco);
+  border: none;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: var(--sombra);
+  display: none;
+  z-index: 90;
+}
+
+#voltar-topo:hover { background: var(--verde-escuro); }
+
+/* ---------- Acessibilidade ---------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
