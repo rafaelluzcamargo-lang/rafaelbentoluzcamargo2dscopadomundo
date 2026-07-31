@@ -59,7 +59,7 @@ const PAISES_CAMPEOES = [
   { pais: "Franca", titulos: 2, anos: [1998, 2018] },
   { pais: "Uruguai", titulos: 2, anos: [1930, 1950] },
   { pais: "Inglaterra", titulos: 1, anos: [1966] },
-  { pais: "Espanha", titulos: 1, anos: [2010] },
+  { pais: "Espanha", titulos: 2, anos: [2010, 2026] },
 ];
 
 /* ---------------------------------------------------------------------
@@ -203,13 +203,13 @@ const JOGOS_CAMPEOES = [
    --------------------------------------------------------------------- */
 const RECORDES = {
   artilheiros: [
+    { nome: "Kylian Mbappé (França)", marca: "22 gols", detalhe: "Copas de 2018 a 2026" },
+    { nome: "Lionel Messi (Argentina)", marca: "21 gols", detalhe: "Copas de 2006 a 2026" },
     { nome: "Miroslav Klose (Alemanha)", marca: "16 gols", detalhe: "Copas de 2002 a 2014" },
-    { nome: "Ronaldo (Brasil)", marca: "15 gols", detalhe: "Copas de 1998 a 2006" },
-    { nome: "Gerd Muller (Alemanha)", marca: "14 gols", detalhe: "Copas de 1970 e 1974" },
-    { nome: "Just Fontaine (Franca)", marca: "13 gols", detalhe: "Todos numa unica Copa (1958)" },
-    { nome: "Lionel Messi (Argentina)", marca: "13 gols", detalhe: "Copas de 2006 a 2022" },
-    { nome: "Kylian Mbappe (Franca)", marca: "12 gols", detalhe: "Copas de 2018 e 2022, aos 23 anos" },
-    { nome: "Pele (Brasil)", marca: "12 gols", detalhe: "Copas de 1958 a 1970" },
+    { nome: "Ronaldo Fenômeno (Brasil)", marca: "15 gols", detalhe: "Copas de 1994 a 2006" },
+    { nome: "Gerd Müller (Alemanha)", marca: "14 gols", detalhe: "Copas de 2006 a 2022" },
+    { nome: "Harry Kane (Inglaterra)", marca: "12 gols", detalhe: "Copas de 2018 e 2022, aos 23 anos" },
+    { nome: "Just Fontaine (França)", marca: "12 gols", detalhe: "Copas de 1958 a 1970" },
   ],
   partidas: [
     { nome: "Lionel Messi (Argentina)", marca: "26 partidas", detalhe: "Recorde de jogos em Copas do Mundo" },
