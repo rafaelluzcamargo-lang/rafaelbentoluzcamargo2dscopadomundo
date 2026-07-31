@@ -1,1 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="bg-background">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#084a29" />
+  <meta name="description" content="Site educativo sobre a Copa do Mundo: historia de 1930 a 2026, formato e classificacao, jogos detalhados dos campeoes e recordes atualizados." />
+  <title>Copa do Mundo: da criacao a 2026 | Guia Completo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============ CABECALHO E NAVEGACAO ============ -->
+  <header class="topo">
+    <div class="nav-container">
+      <div class="logo">
+        <span class="bola" aria-hidden="true">&#9917;</span>
+        <span>Copa do Mundo 1930&ndash;2026</span>
+      </div>
+      <nav aria-label="Navegacao principal">
+        <ul>
+          <li><a href="#historia">Historia</a></li>
+          <li><a href="#formato">Formato</a></li>
+          <li><a href="#jogos">Jogos dos Campeoes</a></li>
+          <li><a href="#recordes">Recordes</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" aria-label="Introducao">
+    <h1>A historia completa da Copa do Mundo, da primeira bola em 1930 ate 2026</h1>
+    <p>
+      Entenda de onde veio o maior torneio de futebol do planeta, como ele funciona,
+      os detalhes dos jogos de cada campeao e os recordes que atravessam gerações.
+    </p>
+    <span class="selo">Dados atualizados ate 31/07/2026</span>
+  </section>
+
+  <main>
+
+    <!-- ============ SECAO: HISTORIA ============ -->
+    <section id="historia">
+      <h2 class="section-titulo">Historia e Evolucao</h2>
+      <p class="section-sub">
+        Uma linha do tempo com todas as edicoes da Copa do Mundo, do torneio de convidados
+        no Uruguai em 1930 ate a primeira Copa com 48 selecoes e tres paises-sede em 2026.
+      </p>
+      <!-- A timeline e preenchida via JavaScript (renderHistoria) -->
+      <div id="timeline" class="timeline"></div>
+    </section>
+
+    <!-- ============ SECAO: FORMATO E CLASSIFICACAO ============ -->
+    <section id="formato">
+      <h2 class="section-titulo">Formato e Classificacao</h2>
+      <p class="section-sub">
+        Como funciona a Copa do Mundo de 2026: da fase de grupos ao mata-mata, incluindo
+        os criterios de desempate e a nova estrutura ampliada.
+      </p>
+      <!-- Os cartoes de regras sao preenchidos via JavaScript (renderFormato) -->
+      <div id="formato-grid" class="grid cols-3"></div>
+    </section>
+
+    <!-- ============ SECAO: JOGOS DOS CAMPEOES ============ -->
+    <section id="jogos">
+      <h2 class="section-titulo">Jogos dos Campeoes</h2>
+      <p class="section-sub">
+        Dados minuciosos das partidas mais marcantes de cada pais campeao: gols, assistencias,
+        cartoes, substituicoes, lesoes e arbitragem. Use a busca e o filtro para explorar.
+      </p>
+
+      <!-- Filtros interativos (busca por texto e por pais) -->
+      <div class="filtros">
+        <label class="sr-only" for="busca-jogo">Buscar jogos</label>
+        <input type="search" id="busca-jogo" placeholder="Buscar por adversario, fase, ano, jogador..." />
+
+        <label class="sr-only" for="filtro-pais">Filtrar por pais campeao</label>
+        <select id="filtro-pais"></select>
+      </div>
+
+      <!-- A lista de jogos e preenchida via JavaScript (renderJogos) -->
+      <div id="lista-jogos"></div>
+    </section>
+
+    <!-- ============ SECAO: RECORDES ============ -->
+    <section id="recordes">
+      <h2 class="section-titulo">Recordes Atualizados</h2>
+      <p class="section-sub">
+        Maiores artilheiros, jogadores com mais partidas, selecoes mais vencedoras e outras
+        marcas historicas. Navegue pelas abas abaixo. (Atualizado ate 31/07/2026.)
+      </p>
+
+      <!-- Botoes das abas -->
+      <div class="tabs" role="tablist" aria-label="Categorias de recordes">
+        <button class="tab-btn ativa" role="tab" aria-selected="true" data-alvo="painel-artilheiros">Artilheiros</button>
+        <button class="tab-btn" role="tab" aria-selected="false" data-alvo="painel-partidas">Mais partidas</button>
+        <button class="tab-btn" role="tab" aria-selected="false" data-alvo="painel-selecoes">Selecoes</button>
+        <button class="tab-btn" role="tab" aria-selected="false" data-alvo="painel-diversos">Curiosidades</button>
+      </div>
+
+      <!-- Paineis das abas (preenchidos via renderRecordes) -->
+      <div class="card">
+        <div id="painel-artilheiros" class="tab-panel ativo" role="tabpanel"></div>
+        <div id="painel-partidas" class="tab-panel" role="tabpanel"></div>
+        <div id="painel-selecoes" class="tab-panel" role="tabpanel"></div>
+        <div id="painel-diversos" class="tab-panel" role="tabpanel"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ RODAPE ============ -->
+  <footer>
+    <p>
+      Conteudo educativo sobre a Copa do Mundo &bull; Historia, formato, jogos e recordes ate 31/07/2026.
+    </p>
+    <p>Feito com HTML, CSS e JavaScript puros, para ajudar mais pessoas a entenderem o maior torneio do futebol.</p>
+  </footer>
+
+  <!-- Botao flutuante de voltar ao topo -->
+  <button id="voltar-topo" aria-label="Voltar ao topo">&#8593;</button>
+
+  <!-- ============ SCRIPT ============ -->
+  <!-- Unico arquivo JS: contem os dados e a logica de interface -->
+  <script src="script.js"></script>
+</body>
+</html>
 
