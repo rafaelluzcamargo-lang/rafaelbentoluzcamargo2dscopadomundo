@@ -1,565 +1,523 @@
-/* =====================================================================
-   script.js - Site "Copa do Mundo: da criacao a 2026"
-   ---------------------------------------------------------------------
-   JavaScript puro (sem bibliotecas). Este UNICO arquivo contem duas
-   partes bem separadas:
-     PARTE 1) BASE DE DADOS  -> todo o conteudo historico (constantes)
-     PARTE 2) LOGICA DE UI   -> funcoes que montam a pagina e a interacao
-   Cada funcao tem comentarios explicativos linha a linha, conforme pedido.
-   Todas as marcas e recordes estao atualizados ate 31/07/2026.
-   ===================================================================== */
-
-
-/* =====================================================================
-   PARTE 1 - BASE DE DADOS
-   Mantemos os dados no topo do arquivo, separados da logica de
-   renderizacao, para facilitar atualizacoes sem mexer na interface.
-   ===================================================================== */
-
-/* ---------------------------------------------------------------------
-   1) LINHA DO TEMPO / HISTORIA
-   Cada objeto representa uma edicao da Copa do Mundo. Usamos esse array
-   tanto para a secao "Historia" quanto para outras referencias.
-   --------------------------------------------------------------------- */
-const EDICOES_COPA = [
-  { ano: 1930, sede: "Uruguai", campeão: "Uruguai", Vice: "Argentina", placar: "4 x 2", selecoes: 13, artilheiro: "Guillermo Stabile (8)", nota: "Primeira Copa do Mundo da historia, sem eliminatorias: as selecoes foram convidadas." },
-  { ano: 1934, sede: "Italia", campeão: "Italia", Vice: "Tchecoslovaquia", placar: "2 x 1", selecoes: 16, artilheiro: "Oldrich Nejedly (5)", nota: "Primeira edicao com eliminatorias e formato mata-mata direto." },
-  { ano: 1938, sede: "Franca", campeão: "Italia", Vice: "Hungria", placar: "4 x 2", selecoes: 15, artilheiro: "Leonidas da Silva (7)", nota: "Italia se torna o primeiro bicampeao. Leonidas brilha pelo Brasil." },
-  { ano: 1950, sede: "Brasil", campeão: "Uruguai", vice: "Brasil", placar: "2 x 1", selecoes: 13, artilheiro: "Ademir (8)", nota: "O 'Maracanazo': Uruguai vence o Brasil na decisao dentro do Maracana." },
-  { ano: 1954, sede: "Suica", campeão: "Alemanha Ocidental", vice: "Hungria", placar: "3 x 2", selecoes: 16, artilheiro: "Sandor Kocsis (11)", nota: "O 'Milagre de Berna': Alemanha supera a poderosa Hungria de Puskas." },
-  { ano: 1958, sede: "Suecia", campeão: "Brasil", vice: "Suecia", placar: "5 x 2", selecoes: 16, artilheiro: "Just Fontaine (13)", nota: "Estreia de Pele aos 17 anos. Fontaine faz recorde de 13 gols numa unica Copa." },
-  { ano: 1962, sede: "Chile", campeão: "Brasil", vice: "Tchecoslovaquia", placar: "3 x 1", selecoes: 16, artilheiro: "Varios (4)", nota: "Brasil bicampeao com Garrincha decisivo apos lesao de Pele." },
-  { ano: 1966, sede: "Inglaterra", campeão: "Inglaterra", vice: "Alemanha Ocidental", placar: "4 x 2", selecoes: 16, artilheiro: "Eusebio (9)", nota: "Unico titulo ingles, com o polemico gol de Hurst na prorrogacao." },
-  { ano: 1970, sede: "Mexico", campeão: "Brasil", vice: "Italia", placar: "4 x 1", selecoes: 16, artilheiro: "Gerd Muller (10)", nota: "Brasil tricampeao conquista a Taca Jules Rimet em definitivo." },
-  { ano: 1974, sede: "Alemanha Ocidental", campeão: "Alemanha Ocidental", vice: "Holanda", placar: "2 x 1", selecoes: 16, artilheiro: "Grzegorz Lato (7)", nota: "Estreia da nova taca FIFA. Alemanha vence o 'Carrossel Holandes'." },
-  { ano: 1978, sede: "Argentina", campeão: "Argentina", vice: "Holanda", placar: "3 x 1", selecoes: 16, artilheiro: "Mario Kempes (6)", nota: "Primeiro titulo argentino, em casa, com Kempes decisivo." },
-  { ano: 1982, sede: "Espanha", campeão: "Italia", vice: "Alemanha Ocidental", placar: "3 x 1", selecoes: 24, artilheiro: "Paolo Rossi (6)", nota: "Torneio ampliado para 24 selecoes. Rossi renasce e leva a Italia ao titulo." },
-  { ano: 1986, sede: "Mexico", campeão: "Argentina", vice: "Alemanha Ocidental", placar: "3 x 2", selecoes: 24, artilheiro: "Gary Lineker (6)", nota: "A Copa de Maradona: 'Mao de Deus' e o gol do seculo contra a Inglaterra." },
-  { ano: 1990, sede: "Italia", campeão: "Alemanha Ocidental", vice: "Argentina", placar: "1 x 0", selecoes: 24, artilheiro: "Salvatore Schillaci (6)", nota: "Alemanha se vinga da final de 1986 com gol de penalti de Brehme." },
-  { ano: 1994, sede: "Estados Unidos", campeão: "Brasil", vice: "Italia", placar: "0 x 0 (3x2 pen)", selecoes: 24, artilheiro: "Stoichkov e Salenko (6)", nota: "Primeira final decidida nos penaltis. Baggio perde e Brasil e tetra." },
-  { ano: 1998, sede: "Franca", campeão: "Franca", vice: "Brasil", placar: "3 x 0", selecoes: 32, artilheiro: "Davor Suker (6)", nota: "Torneio ampliado para 32 selecoes. Zidane brilha no primeiro titulo frances." },
-  { ano: 2002, sede: "Coreia do Sul / Japao", campeão: "Brasil", vice: "Alemanha", placar: "2 x 0", selecoes: 32, artilheiro: "Ronaldo (8)", nota: "Primeira Copa na Asia. Ronaldo se recupera de lesao e leva o penta." },
-  { ano: 2006, sede: "Alemanha", campeão: "Italia", vice: "Franca", placar: "1 x 1 (5x3 pen)", selecoes: 32, artilheiro: "Miroslav Klose (5)", nota: "A cabecada de Zidane em Materazzi na despedida. Italia tetracampea." },
-  { ano: 2010, sede: "Africa do Sul", campeão: "Espanha", vice: "Holanda", placar: "1 x 0", selecoes: 32, artilheiro: "Varios (5)", nota: "Primeira Copa na Africa. Iniesta marca na prorrogacao o titulo espanhol." },
-  { ano: 2014, sede: "Brasil", campeão: "Alemanha", vice: "Argentina", placar: "1 x 0", selecoes: 32, artilheiro: "James Rodriguez (6)", nota: "Gotze decide na prorrogacao. O historico 7 x 1 sobre o Brasil na semi." },
-  { ano: 2018, sede: "Russia", campeão: "Franca", vice: "Croacia", placar: "4 x 2", selecoes: 32, artilheiro: "Harry Kane (6)", nota: "Segundo titulo frances, com a geracao de Mbappe, Griezmann e Pogba." },
-  { ano: 2022, sede: "Catar", campeão: "Argentina", vice: "Franca", placar: "3 x 3 (4x2 pen)", selecoes: 32, artilheiro: "Kylian Mbappe (8)", nota: "A consagracao de Messi. Final considerada uma das melhores da historia." },
-  { ano: 2026, sede: "EUA / Canada / Mexico", campeão: "Espanha", vice: "Argentina", placar: "1 x 0", selecoes: 48, artilheiro: "Kylian Mbappé", nota: "Primeira edicao com 48 selecoes e tres paises-sede. Inicio previsto para junho de 2026." },
+// ===== DATA =====
+const champions = [
+  { year: 1930, nation: "Uruguai", flag: "🇺🇾", titles: 2 },
+  { year: 1934, nation: "Itália", flag: "🇮🇹", titles: 4 },
+  { year: 1938, nation: "Itália", flag: "🇮🇹", titles: 4 },
+  { year: 1950, nation: "Uruguai", flag: "🇺🇾", titles: 2 },
+  { year: 1954, nation: "Alemanha Oc.", flag: "🇩🇪", titles: 4 },
+  { year: 1958, nation: "Brasil", flag: "🇧🇷", titles: 5 },
+  { year: 1962, nation: "Brasil", flag: "🇧🇷", titles: 5 },
+  { year: 1966, nation: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", titles: 1 },
+  { year: 1970, nation: "Brasil", flag: "🇧🇷", titles: 5 },
+  { year: 1974, nation: "Alemanha Oc.", flag: "🇩🇪", titles: 4 },
+  { year: 1978, nation: "Argentina", flag: "🇦🇷", titles: 3 },
+  { year: 1982, nation: "Itália", flag: "🇮🇹", titles: 4 },
+  { year: 1986, nation: "Argentina", flag: "🇦🇷", titles: 3 },
+  { year: 1990, nation: "Alemanha Oc.", flag: "🇩🇪", titles: 4 },
+  { year: 1994, nation: "Brasil", flag: "🇧🇷", titles: 5 },
+  { year: 1998, nation: "França", flag: "🇫🇷", titles: 2 },
+  { year: 2002, nation: "Brasil", flag: "🇧🇷", titles: 5 },
+  { year: 2006, nation: "Itália", flag: "🇮🇹", titles: 4 },
+  { year: 2010, nation: "Espanha", flag: "🇪🇸", titles: 1 },
+  { year: 2014, nation: "Alemanha", flag: "🇩🇪", titles: 4 },
+  { year: 2018, nation: "França", flag: "🇫🇷", titles: 2 },
+  { year: 2022, nation: "Argentina", flag: "🇦🇷", titles: 3 }
 ];
 
-/* ---------------------------------------------------------------------
-   2) PAISES CAMPEOES
-   Lista resumida usada para os filtros da secao "Jogos dos Campeoes".
-   --------------------------------------------------------------------- */
-const PAISES_CAMPEOES = [
-  { pais: "Brasil", titulos: 5, anos: [1958, 1962, 1970, 1994, 2002] },
-  { pais: "Alemanha", titulos: 4, anos: [1954, 1974, 1990, 2014] },
-  { pais: "Italia", titulos: 4, anos: [1934, 1938, 1982, 2006] },
-  { pais: "Argentina", titulos: 3, anos: [1978, 1986, 2022] },
-  { pais: "Franca", titulos: 2, anos: [1998, 2018] },
-  { pais: "Uruguai", titulos: 2, anos: [1930, 1950] },
-  { pais: "Inglaterra", titulos: 1, anos: [1966] },
-  { pais: "Espanha", titulos: 2, anos: [2010, 2026] },
-];
-
-/* ---------------------------------------------------------------------
-   3) JOGOS DOS CAMPEOES (dados minuciosos)
-   Cada objeto representa uma partida da campanha de um campeao, com
-   gols, assistencias, cartoes, substituicoes, lesoes e arbitragem.
-   Reunimos as campanhas mais emblematicas de cada nacao campea.
-   --------------------------------------------------------------------- */
-const JOGOS_CAMPEOES = [
-  /* ----- BRASIL 1970 (tricampeonato) ----- */
-  {
-    pais: "Brasil", ano: 1970, fase: "Final", adversario: "Italia", placar: "4 x 1", local: "Estadio Azteca, Cidade do Mexico",
-    gols: ["Pele 18' (BRA)", "Boninsegna 37' (ITA)", "Gerson 66' (BRA)", "Jairzinho 71' (BRA)", "Carlos Alberto 86' (BRA)"],
-    assistencias: ["Rivelino (no gol de Pele)", "Pele (no gol de Carlos Alberto)"],
-    cartoes: ["Sem cartoes amarelos ou vermelhos registrados"],
-    substituicoes: ["ITA: Juliano por Rivera 84'"],
-    lesoes: ["Nenhuma lesao grave registrada na partida"],
-    arbitragem: "Rudi Glockner (Alemanha Oriental)",
+const paths = {
+  1970: {
+    nation: "Brasil", flag: "🇧🇷",
+    stages: [
+      { name: "Grupo 3", score: "4–1", opp: "Tchecoslováquia" },
+      { name: "Grupo 3", score: "1–0", opp: "Inglaterra" },
+      { name: "Grupo 3", score: "3–2", opp: "Romênia" },
+      { name: "Quartas", score: "4–2", opp: "Peru" },
+      { name: "Semifinal", score: "3–1", opp: "Uruguai" },
+      { name: "Final", score: "4–1", opp: "Itália" }
+    ]
   },
-  {
-    pais: "Brasil", ano: 1970, fase: "Semifinal", adversario: "Uruguai", placar: "3 x 1", local: "Estadio Jalisco, Guadalajara",
-    gols: ["Cubilla 19' (URU)", "Clodoaldo 44' (BRA)", "Jairzinho 76' (BRA)", "Rivelino 89' (BRA)"],
-    assistencias: ["Tostao (participacao nos lances)", "Pele (jogada do lance da famosa finta)"],
-    cartoes: ["Amarelo para Brito (BRA)"],
-    substituicoes: ["Sem substituicoes decisivas registradas"],
-    lesoes: ["Nenhuma lesao grave registrada"],
-    arbitragem: "Ramon Barreto (Uruguai)",
+  1986: {
+    nation: "Argentina", flag: "🇦🇷",
+    stages: [
+      { name: "Grupo", score: "3–1", opp: "Coreia do Sul" },
+      { name: "Grupo", score: "1–1", opp: "Itália" },
+      { name: "Grupo", score: "2–0", opp: "Bulgária" },
+      { name: "Oitavas", score: "1–0", opp: "Uruguai" },
+      { name: "Quartas", score: "2–1", opp: "Inglaterra" },
+      { name: "Semifinal", score: "2–0", opp: "Bélgica" },
+      { name: "Final", score: "3–2", opp: "Alemanha Oc." }
+    ]
   },
-  /* ----- BRASIL 2002 (pentacampeonato) ----- */
-  {
-    pais: "Brasil", ano: 2002, fase: "Final", adversario: "Alemanha", placar: "2 x 0", local: "Estadio Internacional de Yokohama, Japao",
-    gols: ["Ronaldo 67' (BRA)", "Ronaldo 79' (BRA)"],
-    assistencias: ["Rivaldo (no 1o gol)", "Kleberson / Rivaldo (jogada do 2o gol)"],
-    cartoes: ["Amarelo para Roque Junior (BRA)", "Amarelo para Klose (ALE)"],
-    substituicoes: ["BRA: Denilson por Ronaldinho 85'", "ALE: Bierhoff por Asamoah 74'", "ALE: Gomez por Ziege 84'"],
-    lesoes: ["Nenhuma lesao grave; Ronaldo recuperado da lesao de 1998"],
-    arbitragem: "Pierluigi Collina (Italia)",
+  1998: {
+    nation: "França", flag: "🇫🇷",
+    stages: [
+      { name: "Grupo", score: "3–0", opp: "África do Sul" },
+      { name: "Grupo", score: "4–0", opp: "Arábia Saudita" },
+      { name: "Grupo", score: "2–1", opp: "Dinamarca" },
+      { name: "Oitavas", score: "1–0", opp: "Paraguai" },
+      { name: "Quartas", score: "0–0 (3–4 pen)", opp: "Itália" },
+      { name: "Semifinal", score: "2–1", opp: "Croácia" },
+      { name: "Final", score: "3–0", opp: "Brasil" }
+    ]
   },
-  {
-    pais: "Brasil", ano: 2002, fase: "Semifinal", adversario: "Turquia", placar: "1 x 0", local: "Estadio de Saitama, Japao",
-    gols: ["Ronaldo 49' (BRA)"],
-    assistencias: ["Gilberto Silva (participacao na jogada)"],
-    cartoes: ["Amarelo para Roque Junior (BRA)", "Vermelho para Alpay (TUR) por segundo amarelo"],
-    substituicoes: ["BRA: Luizao por Denilson 67'"],
-    lesoes: ["Nenhuma lesao grave registrada"],
-    arbitragem: "Kim Young-joo (Coreia do Sul)",
+  2002: {
+    nation: "Brasil", flag: "🇧🇷",
+    stages: [
+      { name: "Grupo", score: "2–1", opp: "Turquia" },
+      { name: "Grupo", score: "4–0", opp: "China" },
+      { name: "Grupo", score: "5–2", opp: "Costa Rica" },
+      { name: "Oitavas", score: "2–0", opp: "Bélgica" },
+      { name: "Quartas", score: "2–1", opp: "Inglaterra" },
+      { name: "Semifinal", score: "1–0", opp: "Turquia" },
+      { name: "Final", score: "2–0", opp: "Alemanha" }
+    ]
   },
-  /* ----- ALEMANHA 2014 ----- */
-  {
-    pais: "Alemanha", ano: 2014, fase: "Final", adversario: "Argentina", placar: "1 x 0 (pror.)", local: "Estadio do Maracana, Rio de Janeiro",
-    gols: ["Mario Gotze 113' (ALE)"],
-    assistencias: ["Andre Schurrle (cruzamento no gol de Gotze)"],
-    cartoes: ["Amarelo para Howedes (ALE)", "Amarelo para Schweinsteiger (ALE)", "Amarelo para Aguero (ARG)", "Amarelo para Mascherano (ARG)"],
-    substituicoes: ["ALE: Klose por Gotze 88'", "ALE: Schurrle por Kramer 31' (por lesao)", "ARG: Aguero por Lavezzi 46'"],
-    lesoes: ["Christoph Kramer (ALE) saiu com tontura apos choque de cabeca aos 31'"],
-    arbitragem: "Nicola Rizzoli (Italia)",
+  2010: {
+    nation: "Espanha", flag: "🇪🇸",
+    stages: [
+      { name: "Grupo", score: "0–1", opp: "Suíça" },
+      { name: "Grupo", score: "2–0", opp: "Honduras" },
+      { name: "Grupo", score: "2–1", opp: "Chile" },
+      { name: "Oitavas", score: "1–0", opp: "Portugal" },
+      { name: "Quartas", score: "1–0", opp: "Paraguai" },
+      { name: "Semifinal", score: "1–0", opp: "Alemanha" },
+      { name: "Final", score: "1–0 (pro)", opp: "Holanda" }
+    ]
   },
-  {
-    pais: "Alemanha", ano: 2014, fase: "Semifinal", adversario: "Brasil", placar: "7 x 1", local: "Estadio Mineirao, Belo Horizonte",
-    gols: ["Muller 11'", "Klose 23'", "Kroos 24'", "Kroos 26'", "Khedira 29' (ALE)", "Schurrle 69'", "Schurrle 79' (ALE)", "Oscar 90' (BRA)"],
-    assistencias: ["Kroos (2 assistencias)", "Lahm (no 1o gol)", "Muller (no gol de Schurrle)"],
-    cartoes: ["Amarelo para Dante (BRA)"],
-    substituicoes: ["ALE: Klose por Schurrle 58'", "ALE: Muller por Draxler 76'", "BRA: Fred por Willian 70'"],
-    lesoes: ["Ausencias de Neymar (lesao nas costas) e Thiago Silva (suspenso) pesaram no Brasil"],
-    arbitragem: "Marco Rodriguez (Mexico)",
+  2014: {
+    nation: "Alemanha", flag: "🇩🇪",
+    stages: [
+      { name: "Grupo", score: "4–0", opp: "Portugal" },
+      { name: "Grupo", score: "2–2", opp: "Gana" },
+      { name: "Grupo", score: "1–0", opp: "EUA" },
+      { name: "Oitavas", score: "2–1 (pro)", opp: "Argélia" },
+      { name: "Quartas", score: "1–0", opp: "França" },
+      { name: "Semifinal", score: "7–1", opp: "Brasil" },
+      { name: "Final", score: "1–0 (pro)", opp: "Argentina" }
+    ]
   },
-  /* ----- ARGENTINA 2022 ----- */
-  {
-    pais: "Argentina", ano: 2022, fase: "Final", adversario: "Franca", placar: "3 x 3 (4x2 pen)", local: "Estadio Lusail, Catar",
-    gols: ["Messi 23' (pen)", "Di Maria 36' (ARG)", "Mbappe 80' (pen)", "Mbappe 81'", "Messi 108' (ARG)", "Mbappe 118' (pen) (FRA)"],
-    assistencias: ["Mac Allister (no gol de Di Maria)", "Messi (participacao no 2o gol)"],
-    cartoes: ["Amarelos para Montiel, Paredes, Otamendi (ARG)", "Amarelos para Rabiot, Upamecano (FRA)"],
-    substituicoes: ["FRA: Giroud e Dembele por Thuram e Kolo Muani 41'", "ARG: Di Maria por Acuna 64'", "ARG: Montiel bateu o penalti decisivo"],
-    lesoes: ["Nenhuma lesao grave; muitas trocas taticas"],
-    arbitragem: "Szymon Marciniak (Polonia)",
+  2018: {
+    nation: "França", flag: "🇫🇷",
+    stages: [
+      { name: "Grupo", score: "2–1", opp: "Austrália" },
+      { name: "Grupo", score: "1–0", opp: "Peru" },
+      { name: "Grupo", score: "0–0", opp: "Dinamarca" },
+      { name: "Oitavas", score: "4–3", opp: "Argentina" },
+      { name: "Quartas", score: "2–0", opp: "Uruguai" },
+      { name: "Semifinal", score: "1–0", opp: "Bélgica" },
+      { name: "Final", score: "4–2", opp: "Croácia" }
+    ]
   },
-  {
-    pais: "Argentina", ano: 1986, fase: "Quartas de final", adversario: "Inglaterra", placar: "2 x 1", local: "Estadio Azteca, Cidade do Mexico",
-    gols: ["Maradona 51' (a 'Mao de Deus')", "Maradona 55' (o 'Gol do Seculo')", "Lineker 81' (ING)"],
-    assistencias: ["Jogada individual de Maradona nos dois gols"],
-    cartoes: ["Sem cartoes de destaque registrados"],
-    substituicoes: ["ING: Barnes e Waddle entraram no 2o tempo"],
-    lesoes: ["Nenhuma lesao grave registrada"],
-    arbitragem: "Ali Bin Nasser (Tunisia)",
+  2022: {
+    nation: "Argentina", flag: "🇦🇷",
+    stages: [
+      { name: "Grupo", score: "1–2", opp: "Arábia Saudita" },
+      { name: "Grupo", score: "2–0", opp: "México" },
+      { name: "Grupo", score: "2–0", opp: "Polônia" },
+      { name: "Oitavas", score: "2–1", opp: "Austrália" },
+      { name: "Quartas", score: "2–2 (4–3 pen)", opp: "Holanda" },
+      { name: "Semifinal", score: "3–0", opp: "Croácia" },
+      { name: "Final", score: "3–3 (4–2 pen)", opp: "França" }
+    ]
   },
-  /* ----- ITALIA 2006 ----- */
-  {
-    pais: "Italia", ano: 2006, fase: "Final", adversario: "Franca", placar: "1 x 1 (5x3 pen)", local: "Olympiastadion, Berlim",
-    gols: ["Zidane 7' (pen) (FRA)", "Materazzi 19' (ITA)"],
-    assistencias: ["Pirlo (escanteio no gol de Materazzi)"],
-    cartoes: ["Vermelho para Zidane 110' (cabecada em Materazzi)", "Amarelos diversos"],
-    substituicoes: ["ITA: Del Piero por Iaquinta 86'", "FRA: Trezeguet errou o penalti decisivo"],
-    lesoes: ["Nenhuma lesao grave; expulsao de Zidane marcou o jogo"],
-    arbitragem: "Horacio Elizondo (Argentina)",
+  1958: {
+    nation: "Brasil", flag: "🇧🇷",
+    stages: [
+      { name: "Grupo", score: "3–0", opp: "Áustria" },
+      { name: "Grupo", score: "0–0", opp: "Inglaterra" },
+      { name: "Grupo", score: "2–0", opp: "URSS" },
+      { name: "Quartas", score: "1–0", opp: "País de Gales" },
+      { name: "Semifinal", score: "5–2", opp: "França" },
+      { name: "Final", score: "5–2", opp: "Suécia" }
+    ]
   },
-  /* ----- FRANCA 1998 ----- */
-  {
-    pais: "Franca", ano: 1998, fase: "Final", adversario: "Brasil", placar: "3 x 0", local: "Stade de France, Saint-Denis",
-    gols: ["Zidane 27'", "Zidane 45+1'", "Petit 90' (FRA)"],
-    assistencias: ["Escanteios cobrados por Petit e Djorkaeff nos gols de Zidane"],
-    cartoes: ["Vermelho para Desailly 68' (FRA) por segundo amarelo"],
-    substituicoes: ["FRA: Boghossian por Zidane 75'", "BRA: Edmundo por Bebeto"],
-    lesoes: ["Ronaldo (BRA) teve mal-estar/convulsao horas antes do jogo, mas foi a campo"],
-    arbitragem: "Said Belqola (Marrocos)",
-  },
-  /* ----- ESPANHA 2010 ----- */
-  {
-    pais: "Espanha", ano: 2010, fase: "Final", adversario: "Holanda", placar: "1 x 0 (pror.)", local: "Soccer City, Joanesburgo",
-    gols: ["Andres Iniesta 116' (ESP)"],
-    assistencias: ["Cesc Fabregas (passe no gol de Iniesta)"],
-    cartoes: ["Vermelho para Heitinga 109' (HOL)", "14 cartoes amarelos na partida, recorde de finais"],
-    substituicoes: ["ESP: Fabregas por Xabi Alonso 87'", "ESP: Jesus Navas por Pedro 60'"],
-    lesoes: ["Nenhuma lesao grave; jogo muito faltoso"],
-    arbitragem: "Howard Webb (Inglaterra)",
-  },
-  /* ----- URUGUAI 1950 ----- */
-  {
-    pais: "Uruguai", ano: 1950, fase: "Decisao (Maracanazo)", adversario: "Brasil", placar: "2 x 1", local: "Estadio do Maracana, Rio de Janeiro",
-    gols: ["Friaca 47' (BRA)", "Schiaffino 66' (URU)", "Ghiggia 79' (URU)"],
-    assistencias: ["Ghiggia (no gol de Schiaffino)"],
-    cartoes: ["Sem cartoes (regra de cartoes ainda nao existia)"],
-    substituicoes: ["Nao havia substituicoes na epoca"],
-    lesoes: ["Nenhuma lesao grave registrada"],
-    arbitragem: "George Reader (Inglaterra)",
-  },
-  /* ----- INGLATERRA 1966 ----- */
-  {
-    pais: "Inglaterra", ano: 1966, fase: "Final", adversario: "Alemanha Ocidental", placar: "4 x 2 (pror.)", local: "Estadio de Wembley, Londres",
-    gols: ["Haller 12' (ALE)", "Hurst 18' (ING)", "Peters 78' (ING)", "Weber 89' (ALE)", "Hurst 101' (ING)", "Hurst 120' (ING)"],
-    assistencias: ["Moore (no 1o gol de Hurst)", "escanteio no gol de Peters"],
-    cartoes: ["Sem cartoes (regra ainda nao existia)"],
-    substituicoes: ["Nao havia substituicoes na epoca"],
-    lesoes: ["Nenhuma lesao grave registrada"],
-    arbitragem: "Gottfried Dienst (Suica) - gol fantasma de Hurst gerou polemica historica",
-  },
-];
-
-/* ---------------------------------------------------------------------
-   4) RECORDES (atualizados ate 31/07/2026)
-   Organizados por categoria para renderizar em cartoes.
-   --------------------------------------------------------------------- */
-const RECORDES = {
-  artilheiros: [
-    { nome: "Kylian Mbappé (França)", marca: "22 gols", detalhe: "Copas de 2018 a 2026" },
-    { nome: "Lionel Messi (Argentina)", marca: "21 gols", detalhe: "Copas de 2006 a 2026" },
-    { nome: "Miroslav Klose (Alemanha)", marca: "16 gols", detalhe: "Copas de 2002 a 2014" },
-    { nome: "Ronaldo Fenômeno (Brasil)", marca: "15 gols", detalhe: "Copas de 1994 a 2006" },
-    { nome: "Gerd Müller (Alemanha)", marca: "14 gols", detalhe: "Copas de 2006 a 2022" },
-    { nome: "Harry Kane (Inglaterra)", marca: "12 gols", detalhe: "Copas de 2018 e 2022, aos 23 anos" },
-    { nome: "Just Fontaine (França)", marca: "12 gols", detalhe: "Copas de 1958 a 1970" },
-  ],
-  partidas: [
-    { nome: "Lionel Messi (Argentina)", marca: "26 partidas", detalhe: "Recorde de jogos em Copas do Mundo" },
-    { nome: "Lothar Matthaus (Alemanha)", marca: "25 partidas", detalhe: "Cinco Copas disputadas (1982-1998)" },
-    { nome: "Miroslav Klose (Alemanha)", marca: "24 partidas", detalhe: "Quatro Copas disputadas" },
-    { nome: "Paolo Maldini (Italia)", marca: "23 partidas", detalhe: "Quatro Copas disputadas" },
-  ],
-  selecoes: [
-    { nome: "Brasil", marca: "5 titulos", detalhe: "Unico pais presente em todas as edicoes" },
-    { nome: "Alemanha", marca: "4 titulos", detalhe: "8 finais disputadas, recorde absoluto" },
-    { nome: "Italia", marca: "4 titulos", detalhe: "Bicampea consecutiva em 1934 e 1938" },
-    { nome: "Argentina", marca: "3 titulos", detalhe: "Ultimo em 2022, no Catar" },
-  ],
-  diversos: [
-    { nome: "Maior goleada", marca: "Hungria 10 x 1 El Salvador", detalhe: "Copa de 1982" },
-    { nome: "Gol mais rapido", marca: "Hakan Sukur (11 segundos)", detalhe: "Turquia, Copa de 2002" },
-    { nome: "Jogador mais jovem", marca: "Norman Whiteside (17 anos e 41 dias)", detalhe: "Irlanda do Norte, 1982" },
-    { nome: "Maior artilheiro numa unica Copa", marca: "Just Fontaine (13 gols)", detalhe: "Franca, 1958" },
-    { nome: "Mais titulos como tecnico", marca: "Vittorio Pozzo (2 titulos)", detalhe: "Italia, 1934 e 1938" },
-  ],
+  1966: {
+    nation: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    stages: [
+      { name: "Grupo", score: "0–0", opp: "Uruguai" },
+      { name: "Grupo", score: "2–0", opp: "México" },
+      { name: "Grupo", score: "2–0", opp: "França" },
+      { name: "Quartas", score: "1–0", opp: "Argentina" },
+      { name: "Semifinal", score: "2–1", opp: "Portugal" },
+      { name: "Final", score: "4–2 (pro)", opp: "Alemanha Oc." }
+    ]
+  }
 };
 
-/* ---------------------------------------------------------------------
-   5) FORMATO E REGRAS DA COPA DE 2026
-   Texto estruturado usado na secao "Formato e Classificacao".
-   --------------------------------------------------------------------- */
-const FORMATO_2026 = [
-  {
-    titulo: "48 selecoes participantes",
-    texto: "A Copa de 2026 sera a primeira com 48 selecoes (ante as 32 anteriores), distribuidas em 12 grupos de 4 times cada.",
-  },
-  {
-    titulo: "Fase de grupos",
-    texto: "Cada selecao joga 3 partidas na fase de grupos. Vitoria vale 3 pontos, empate 1 ponto e derrota 0 ponto.",
-  },
-  {
-    titulo: "Classificacao para o mata-mata",
-    texto: "Avancam os 2 primeiros de cada grupo (24 selecoes) mais os 8 melhores terceiros colocados, totalizando 32 classificados para os 16 avos de final.",
-  },
-  {
-    titulo: "Criterios de desempate na fase de grupos",
-    texto: "1) Pontos; 2) Saldo de gols; 3) Gols marcados; 4) Confronto direto; 5) Fair play (menos cartoes); 6) Sorteio, se necessario.",
-  },
-  {
-    titulo: "Fase eliminatoria (mata-mata)",
-    texto: "A partir dos 16 avos, tudo e mata-mata: 16 avos, oitavas, quartas, semifinais e final. Em caso de empate, ha prorrogacao de 30 minutos e, persistindo o empate, disputa de penaltis.",
-  },
-  {
-    titulo: "Total de jogos",
-    texto: "Serao 104 partidas ao todo, contra 64 nas edicoes de 32 selecoes. O campeao disputara 8 jogos ate o titulo.",
-  },
+const balls = [
+  { year: 1930, name: "T-Model", emoji: "⚽" },
+  { year: 1934, name: "Federale 102", emoji: "⚽" },
+  { year: 1938, name: "Allen", emoji: "⚽" },
+  { year: 1950, name: "Duplo T", emoji: "⚽" },
+  { year: 1954, name: "Swiss World Champion", emoji: "⚽" },
+  { year: 1958, name: "Top Star", emoji: "⚽" },
+  { year: 1962, name: "Mr. Crack", emoji: "⚽" },
+  { year: 1966, name: "Challenge 4-Star", emoji: "⚽" },
+  { year: 1970, name: "Telstar", emoji: "⚫⚪" },
+  { year: 1974, name: "Telstar Durlast", emoji: "⚫⚪" },
+  { year: 1978, name: "Tango", emoji: "⚫⚪" },
+  { year: 1982, name: "Tango España", emoji: "⚫⚪" },
+  { year: 1986, name: "Azteca", emoji: "⚽" },
+  { year: 1990, name: "Etrusco Unico", emoji: "⚽" },
+  { year: 1994, name: "Questra", emoji: "⚽" },
+  { year: 1998, name: "Tricolore", emoji: "🇫🇷" },
+  { year: 2002, name: "Fevernova", emoji: "🔥" },
+  { year: 2006, name: "Teamgeist", emoji: "⚽" },
+  { year: 2010, name: "Jabulani", emoji: "⚽" },
+  { year: 2014, name: "Brazuca", emoji: "🇧🇷" },
+  { year: 2018, name: "Telstar 18", emoji: "⚫⚪" },
+  { year: 2022, name: "Al Rihla", emoji: "✈️" },
+  { year: 2026, name: "Trionda", emoji: "🌊" }
 ];
 
+const stadiums = [
+  { name: "Estádio Centenário", year: "1930 · Montevidéu", emoji: "🏟️" },
+  { name: "Maracanã", year: "1950 · Rio de Janeiro", emoji: "🏟️" },
+  { name: "Wembley", year: "1966 · Londres", emoji: "🏟️" },
+  { name: "Estádio Azteca", year: "1970/86 · Cidade do México", emoji: "🏟️" },
+  { name: "Olympiastadion", year: "1974 · Munique", emoji: "🏟️" },
+  { name: "Monumental", year: "1978 · Buenos Aires", emoji: "🏟️" },
+  { name: "Santiago Bernabéu", year: "1982 · Madrid", emoji: "🏟️" },
+  { name: "Rose Bowl", year: "1994 · Pasadena", emoji: "🏟️" },
+  { name: "Stade de France", year: "1998 · Saint-Denis", emoji: "🏟️" },
+  { name: "Yokohama / Seoul", year: "2002", emoji: "🏟️" },
+  { name: "Olympiastadion Berlin", year: "2006", emoji: "🏟️" },
+  { name: "Soccer City", year: "2010 · Joanesburgo", emoji: "🏟️" },
+  { name: "Maracanã", year: "2014 · Rio", emoji: "🏟️" },
+  { name: "Luzhniki", year: "2018 · Moscou", emoji: "🏟️" },
+  { name: "Lusail Stadium", year: "2022 · Catar", emoji: "🏟️" },
+  { name: "MetLife Stadium", year: "2026 · Nova Jersey", emoji: "🏟️" }
+];
 
-/* =====================================================================
-   PARTE 2 - LOGICA DE INTERFACE
-   Funcoes que leem os dados acima e montam a pagina, alem de tratar
-   a interatividade (abas, filtros e botao de voltar ao topo).
-   ===================================================================== */
+// ===== RENDER CHAMPIONS =====
+const grid = document.getElementById('championsGrid');
+champions.forEach(c => {
+  const card = document.createElement('div');
+  card.className = 'champion-card';
+  card.innerHTML = `
+    <div class="year">${c.year}</div>
+    <span class="flag">${c.flag}</span>
+    <div class="nation">${c.nation}</div>
+    <div class="titles">${c.titles} título${c.titles > 1 ? 's' : ''}</div>
+  `;
+  grid.appendChild(card);
+});
 
-/* ---------------------------------------------------------------------
-   Funcao utilitaria: cria uma lista <ul> a partir de um array de textos.
-   Recebe um array de strings e devolve o HTML de uma lista.
-   --------------------------------------------------------------------- */
-function criarLista(itens) {
-  // Se o array estiver vazio ou indefinido, mostramos um traco.
-  if (!itens || itens.length === 0) return "<ul><li>-</li></ul>";
-  // Mapeamos cada item para uma tag <li> e juntamos tudo numa string.
-  const linhas = itens.map(function (item) {
-    return "<li>" + item + "</li>"; // envolve cada texto num item de lista
+// ===== PATH SELECTOR =====
+const pathSel = document.getElementById('pathSelector');
+const pathDisp = document.getElementById('pathDisplay');
+Object.keys(paths).sort((a,b) => b - a).forEach(year => {
+  const btn = document.createElement('button');
+  btn.className = 'path-btn';
+  btn.textContent = year;
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.path-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    showPath(year);
   });
-  // Retornamos a lista completa montada.
-  return "<ul>" + linhas.join("") + "</ul>";
+  pathSel.appendChild(btn);
+});
+
+function showPath(year) {
+  const p = paths[year];
+  pathDisp.innerHTML = `
+    <div class="path-header">
+      <span class="flag">${p.flag}</span>
+      <div>
+        <h3>${p.nation} · ${year}</h3>
+        <span>Caminho até o título</span>
+      </div>
+    </div>
+    <div class="path-stages">
+      ${p.stages.map((s, i) => `
+        <div class="stage ${i === p.stages.length - 1 ? 'final' : ''}">
+          <div class="stage-name">${s.name}</div>
+          <div class="score">${s.score}</div>
+          <div class="opp">vs ${s.opp}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
 }
 
-/* ---------------------------------------------------------------------
-   renderHistoria: monta a linha do tempo na secao "Historia".
-   Percorre o array EDICOES_COPA e cria um cartao por edicao.
-   --------------------------------------------------------------------- */
-function renderHistoria() {
-  // Pegamos o container onde a timeline sera inserida.
-  const container = document.getElementById("timeline");
-  // Se o elemento nao existir, encerramos para evitar erro.
-  if (!container) return;
-  // Transformamos cada edicao num bloco HTML de timeline.
-  const html = EDICOES_COPA.map(function (ed) {
-    // Retornamos o HTML de um item da linha do tempo com os dados da edicao.
-    return (
-      '<article class="timeline-item">' +
-      '<span class="ano">' + ed.ano + "</span>" +
-      "<h3>Sede: " + ed.sede + "</h3>" +
-      '<p class="meta">Campeao: <strong>' + ed.campeao + "</strong>" +
-      (ed.vice !== "A definir" ? " | Vice: " + ed.vice + " | Placar da final: " + ed.placar : "") +
-      " | Selecoes: " + ed.selecoes + "</p>" +
-      '<p class="meta">Artilheiro: ' + ed.artilheiro + "</p>" +
-      "<p>" + ed.nota + "</p>" +
-      "</article>"
-    );
-  });
-  // Inserimos todo o HTML gerado de uma vez (mais performatico).
-  container.innerHTML = html.join("");
-}
+// ===== GALLERY =====
+const galleryGrid = document.getElementById('galleryGrid');
 
-/* ---------------------------------------------------------------------
-   renderFormato: monta os cartoes da secao "Formato e Classificacao".
-   Usa o array FORMATO_2026, numerando cada regra.
-   --------------------------------------------------------------------- */
-function renderFormato() {
-  // Container de destino dos cartoes de formato.
-  const container = document.getElementById("formato-grid");
-  if (!container) return; // seguranca: sai se nao encontrar
-  // Para cada regra, criamos um cartao numerado.
-  const html = FORMATO_2026.map(function (regra, indice) {
-    // indice comeca em 0, por isso somamos 1 para exibir 1, 2, 3...
-    return (
-      '<div class="card formato-card">' +
-      '<span class="num">' + (indice + 1) + "</span>" +
-      "<h3>" + regra.titulo + "</h3>" +
-      "<p>" + regra.texto + "</p>" +
-      "</div>"
-    );
-  });
-  // Inserimos os cartoes no container.
-  container.innerHTML = html.join("");
-}
-
-/* ---------------------------------------------------------------------
-   montarCartaoJogo: recebe um objeto de jogo e devolve o HTML do cartao.
-   Separado para reaproveitarmos na renderizacao e nos filtros.
-   --------------------------------------------------------------------- */
-function montarCartaoJogo(jogo) {
-  // Montamos o cabecalho com as tags (pais, ano, fase) e o placar.
-  const cabecalho =
-    '<div class="jogo-cabecalho">' +
-    '<div class="tags">' +
-    '<span class="tag pais">' + jogo.pais + "</span>" +
-    '<span class="tag ano">' + jogo.ano + "</span>" +
-    '<span class="tag fase">' + jogo.fase + "</span>" +
-    "</div>" +
-    '<span class="jogo-placar">' + jogo.pais + " " + jogo.placar + " " + jogo.adversario + "</span>" +
-    "</div>";
-
-  // Linha com o local da partida.
-  const local = '<p class="jogo-local">Local: ' + jogo.local + "</p>";
-
-  // Blocos de detalhes: gols, assistencias, cartoes, substituicoes, lesoes e arbitragem.
-  const detalhes =
-    '<div class="jogo-detalhes">' +
-    '<div class="detalhe-bloco"><h4>Gols</h4>' + criarLista(jogo.gols) + "</div>" +
-    '<div class="detalhe-bloco"><h4>Assistencias</h4>' + criarLista(jogo.assistencias) + "</div>" +
-    '<div class="detalhe-bloco"><h4>Cartoes</h4>' + criarLista(jogo.cartoes) + "</div>" +
-    '<div class="detalhe-bloco"><h4>Substituicoes</h4>' + criarLista(jogo.substituicoes) + "</div>" +
-    '<div class="detalhe-bloco"><h4>Lesoes</h4>' + criarLista(jogo.lesoes) + "</div>" +
-    '<div class="detalhe-bloco"><h4>Arbitragem</h4>' + criarLista([jogo.arbitragem]) + "</div>" +
-    "</div>";
-
-  // Retornamos o cartao completo.
-  return '<article class="jogo">' + cabecalho + local + detalhes + "</article>";
-}
-
-/* ---------------------------------------------------------------------
-   renderJogos: exibe os jogos filtrados na secao "Jogos dos Campeoes".
-   Recebe (opcionalmente) um array ja filtrado; senao usa todos.
-   --------------------------------------------------------------------- */
-function renderJogos(lista) {
-  // Container onde os cartoes de jogos aparecem.
-  const container = document.getElementById("lista-jogos");
-  if (!container) return; // seguranca
-  // Se nao veio lista, usamos o array completo de jogos.
-  const jogos = lista || JOGOS_CAMPEOES;
-  // Se nenhum jogo bateu com o filtro, exibimos mensagem amigavel.
-  if (jogos.length === 0) {
-    container.innerHTML = '<p class="sem-resultado">Nenhum jogo encontrado com esse filtro.</p>';
-    return; // encerramos aqui
-  }
-  // Montamos o HTML de todos os cartoes e inserimos de uma vez.
-  container.innerHTML = jogos.map(montarCartaoJogo).join("");
-}
-
-/* ---------------------------------------------------------------------
-   preencherFiltroPaises: popula o <select> de paises campeoes.
-   Le PAISES_CAMPEOES e adiciona uma <option> por pais.
-   --------------------------------------------------------------------- */
-function preencherFiltroPaises() {
-  // Pegamos o elemento select do filtro de pais.
-  const select = document.getElementById("filtro-pais");
-  if (!select) return; // seguranca
-  // Comecamos com a opcao padrao "todos".
-  let html = '<option value="">Todos os campeoes</option>';
-  // Adicionamos uma opcao para cada pais campeao.
-  PAISES_CAMPEOES.forEach(function (item) {
-    html += '<option value="' + item.pais + '">' + item.pais + " (" + item.titulos + " titulos)</option>";
-  });
-  // Aplicamos o HTML montado ao select.
-  select.innerHTML = html;
-}
-
-/* ---------------------------------------------------------------------
-   aplicarFiltros: le os valores do campo de busca e do select e
-   filtra o array de jogos combinando os dois criterios.
-   E chamada sempre que o usuario digita ou muda o pais selecionado.
-   --------------------------------------------------------------------- */
-function aplicarFiltros() {
-  // Lemos o texto digitado e passamos para minusculas (busca sem case).
-  const texto = document.getElementById("busca-jogo").value.toLowerCase().trim();
-  // Lemos o pais selecionado no dropdown.
-  const paisSelecionado = document.getElementById("filtro-pais").value;
-
-  // Filtramos o array principal aplicando os dois criterios.
-  const filtrados = JOGOS_CAMPEOES.filter(function (jogo) {
-    // Criterio 1: se ha pais selecionado, o jogo precisa ser desse pais.
-    const passaPais = paisSelecionado === "" || jogo.pais === paisSelecionado;
-
-    // Criterio 2: a busca textual procura em varios campos do jogo.
-    // Juntamos os campos relevantes numa unica string para pesquisar.
-    const campos = (
-      jogo.pais + " " + jogo.adversario + " " + jogo.fase + " " +
-      jogo.ano + " " + jogo.gols.join(" ") + " " + jogo.arbitragem
-    ).toLowerCase();
-    // O jogo passa se o texto estiver vazio OU se for encontrado nos campos.
-    const passaTexto = texto === "" || campos.indexOf(texto) !== -1;
-
-    // O jogo so aparece se passar nos dois criterios ao mesmo tempo.
-    return passaPais && passaTexto;
-  });
-
-  // Renderizamos apenas os jogos que passaram no filtro.
-  renderJogos(filtrados);
-}
-
-/* ---------------------------------------------------------------------
-   renderRecordes: preenche os paineis de abas com os recordes.
-   Cada categoria de RECORDES vira uma lista de itens.
-   --------------------------------------------------------------------- */
-function renderRecordes() {
-  // Mapa que associa o id do painel a cada categoria de recordes.
-  const mapa = {
-    "painel-artilheiros": RECORDES.artilheiros,
-    "painel-partidas": RECORDES.partidas,
-    "painel-selecoes": RECORDES.selecoes,
-    "painel-diversos": RECORDES.diversos,
-  };
-
-  // Percorremos cada chave do mapa para preencher o painel correspondente.
-  Object.keys(mapa).forEach(function (idPainel) {
-    // Pegamos o elemento do painel pelo id.
-    const painel = document.getElementById(idPainel);
-    if (!painel) return; // seguranca por painel
-    // Para cada recorde da categoria, montamos uma linha.
-    const html = mapa[idPainel].map(function (r) {
-      return (
-        '<div class="recorde-item">' +
-        "<div><div class=\"nome\">" + r.nome + "</div>" +
-        '<div class="detalhe">' + r.detalhe + "</div></div>" +
-        '<span class="marca">' + r.marca + "</span>" +
-        "</div>"
-      );
-    });
-    // Inserimos as linhas no painel.
-    painel.innerHTML = html.join("");
+function renderGallery(tab) {
+  galleryGrid.innerHTML = '';
+  const data = tab === 'balls' ? balls : stadiums;
+  data.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'gallery-item';
+    el.innerHTML = `
+      <div class="visual">${item.emoji || '⚽'}</div>
+      <div class="name">${item.name}</div>
+      <div class="year">${item.year || ''}</div>
+    `;
+    galleryGrid.appendChild(el);
   });
 }
+renderGallery('balls');
 
-/* ---------------------------------------------------------------------
-   configurarAbas: adiciona o comportamento de troca de abas nos recordes.
-   Ao clicar num botao, ativamos o painel correspondente e desativamos
-   os demais.
-   --------------------------------------------------------------------- */
-function configurarAbas() {
-  // Selecionamos todos os botoes de aba.
-  const botoes = document.querySelectorAll(".tab-btn");
-  // Para cada botao, registramos um evento de clique.
-  botoes.forEach(function (botao) {
-    botao.addEventListener("click", function () {
-      // Lemos qual painel esse botao controla (atributo data-alvo).
-      const alvo = botao.getAttribute("data-alvo");
-
-      // Removemos a classe "ativa" de todos os botoes (visual).
-      botoes.forEach(function (b) {
-        b.classList.remove("ativa");
-        b.setAttribute("aria-selected", "false"); // acessibilidade
-      });
-      // Ativamos apenas o botao clicado.
-      botao.classList.add("ativa");
-      botao.setAttribute("aria-selected", "true");
-
-      // Escondemos todos os paineis e mostramos so o alvo.
-      document.querySelectorAll(".tab-panel").forEach(function (painel) {
-        painel.classList.remove("ativo");
-      });
-      // Ativamos o painel correspondente ao botao clicado.
-      const painelAlvo = document.getElementById(alvo);
-      if (painelAlvo) painelAlvo.classList.add("ativo");
-    });
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderGallery(btn.dataset.tab);
   });
-}
+});
 
-/* ---------------------------------------------------------------------
-   configurarVoltarTopo: mostra/esconde o botao flutuante e faz o
-   scroll suave ate o topo quando clicado.
-   --------------------------------------------------------------------- */
-function configurarVoltarTopo() {
-  // Pegamos o botao de voltar ao topo.
-  const botao = document.getElementById("voltar-topo");
-  if (!botao) return; // seguranca
-
-  // Ao rolar a pagina, decidimos se o botao aparece ou some.
-  window.addEventListener("scroll", function () {
-    // Se o usuario rolou mais de 400px, mostramos o botao.
-    if (window.scrollY > 400) {
-      botao.style.display = "block";
-    } else {
-      botao.style.display = "none";
+// ===== COUNTERS & BARS =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      if (entry.target.querySelector('.number[data-count]')) {
+        animateCounters(entry.target);
+      }
+      if (entry.target.querySelector('.bar-fill')) {
+        entry.target.querySelectorAll('.bar-fill').forEach(bar => {
+          bar.style.width = bar.dataset.width + '%';
+        });
+      }
     }
   });
+}, { threshold: 0.15 });
 
-  // Ao clicar, rolamos suavemente ate o topo da pagina.
-  botao.addEventListener("click", function () {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+function animateCounters(container) {
+  container.querySelectorAll('.number[data-count]').forEach(el => {
+    const target = +el.dataset.count;
+    let current = 0;
+    const step = Math.ceil(target / 40);
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) {
+        el.textContent = target;
+        clearInterval(timer);
+      } else {
+        el.textContent = current;
+      }
+    }, 30);
   });
 }
 
-/* ---------------------------------------------------------------------
-   iniciar: funcao principal chamada quando o HTML termina de carregar.
-   Ela dispara todas as renderizacoes e configura os eventos.
-   --------------------------------------------------------------------- */
-function iniciar() {
-  // 1) Renderizamos o conteudo estatico vindo dos dados.
-  renderHistoria();     // linha do tempo
-  renderFormato();      // regras do torneio
-  renderRecordes();     // recordes nas abas
-  preencherFiltroPaises(); // popular dropdown de paises
-  renderJogos();        // mostra todos os jogos inicialmente
+// ===== NAV =====
+const nav = document.getElementById('nav');
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
 
-  // 2) Configuramos os comportamentos interativos.
-  configurarAbas();     // troca de abas dos recordes
-  configurarVoltarTopo(); // botao flutuante
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
 
-  // 3) Ligamos os filtros da secao de jogos aos eventos de input/change.
-  const busca = document.getElementById("busca-jogo");
-  const selectPais = document.getElementById("filtro-pais");
-  // A cada tecla digitada, reaplicamos os filtros.
-  if (busca) busca.addEventListener("input", aplicarFiltros);
-  // A cada mudanca no dropdown, reaplicamos os filtros.
-  if (selectPais) selectPais.addEventListener("change", aplicarFiltros);
+menuToggle.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+});
+
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => navLinks.classList.remove('open'));
+});
+
+const sections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 200) current = s.id;
+  });
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+
+// ===== MINI-GAME: PENALTY =====
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+const scoreEl = document.getElementById('score');
+const attemptsEl = document.getElementById('attempts');
+const accuracyEl = document.getElementById('accuracy');
+const gameMsg = document.getElementById('gameMsg');
+const kickBtn = document.getElementById('kickBtn');
+const resetBtn = document.getElementById('resetBtn');
+
+let score = 0, attempts = 0;
+let gkX = 320, gkDir = 1, gkSpeed = 3;
+let ballY = 300, ballX = 320, ballActive = false;
+let power = 0, powerDir = 1, shooting = false;
+let result = null;
+
+function resizeCanvas() {
+  const maxW = Math.min(640, window.innerWidth - 60);
+  canvas.style.width = maxW + 'px';
+  canvas.style.height = (maxW * 0.5625) + 'px';
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+function drawField() {
+  ctx.fillStyle = '#0d1a0d';
+  ctx.fillRect(0, 0, 640, 360);
+
+  ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+  ctx.lineWidth = 2;
+  for (let i = 0; i < 8; i++) {
+    ctx.beginPath();
+    ctx.moveTo(0, 40 + i * 40);
+    ctx.lineTo(640, 40 + i * 40);
+    ctx.stroke();
+  }
+
+  ctx.strokeStyle = '#f5f5f7';
+  ctx.lineWidth = 6;
+  ctx.beginPath();
+  ctx.moveTo(160, 40);
+  ctx.lineTo(160, 160);
+  ctx.lineTo(480, 160);
+  ctx.lineTo(480, 40);
+  ctx.stroke();
+
+  ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+  ctx.lineWidth = 1;
+  for (let x = 170; x < 480; x += 20) {
+    ctx.beginPath();
+    ctx.moveTo(x, 40);
+    ctx.lineTo(x, 160);
+    ctx.stroke();
+  }
+  for (let y = 50; y < 160; y += 15) {
+    ctx.beginPath();
+    ctx.moveTo(160, y);
+    ctx.lineTo(480, y);
+    ctx.stroke();
+  }
+
+  ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(160, 160);
+  ctx.lineTo(480, 160);
+  ctx.stroke();
 }
 
-/* ---------------------------------------------------------------------
-   Ponto de entrada: esperamos o DOM carregar totalmente antes de rodar
-   a funcao iniciar(), garantindo que todos os elementos existam.
-   --------------------------------------------------------------------- */
-document.addEventListener("DOMContentLoaded", iniciar);
+function drawGK() {
+  ctx.fillStyle = '#e63946';
+  ctx.fillRect(gkX - 25, 100, 50, 50);
+  ctx.beginPath();
+  ctx.arc(gkX, 90, 15, 0, Math.PI * 2);
+  ctx.fillStyle = '#f5d0a9';
+  ctx.fill();
+  ctx.fillStyle = '#e63946';
+  ctx.fillRect(gkX - 40, 110, 15, 30);
+  ctx.fillRect(gkX + 25, 110, 15, 30);
+}
 
+function drawBall() {
+  ctx.beginPath();
+  ctx.arc(ballX, ballY, 12, 0, Math.PI * 2);
+  ctx.fillStyle = '#f5f5f7';
+  ctx.fill();
+  ctx.strokeStyle = '#333';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+}
+
+function drawPowerBar() {
+  if (!shooting && !ballActive) {
+    ctx.fillStyle = 'rgba(0,0,0,0.5)';
+    ctx.fillRect(220, 320, 200, 16);
+    ctx.fillStyle = power > 70 ? '#e63946' : power > 40 ? '#d4af37' : '#2ecc71';
+    ctx.fillRect(220, 320, power * 2, 16);
+    ctx.strokeStyle = '#f5f5f7';
+    ctx.strokeRect(220, 320, 200, 16);
+  }
+}
+
+function update() {
+  if (!ballActive && !result) {
+    gkX += gkDir * gkSpeed;
+    if (gkX > 450 || gkX < 190) gkDir *= -1;
+
+    if (shooting) {
+      power += powerDir * 2.5;
+      if (power >= 100 || power <= 0) powerDir *= -1;
+    }
+  }
+
+  if (ballActive) {
+    ballY -= 8;
+    if (power < 35) ballX -= 1.5;
+    else if (power > 75) ballX += 1.5;
+
+    if (ballY <= 140) {
+      ballActive = false;
+      const dist = Math.abs(ballX - gkX);
+      if (dist < 40) {
+        result = 'save';
+        gameMsg.textContent = '🧤 DEFENDIDO! Tente novamente.';
+        gameMsg.style.color = 'var(--accent)';
+      } else if (ballX > 165 && ballX < 475) {
+        result = 'goal';
+        score++;
+        gameMsg.textContent = '⚽ GOOOOL! Que precisão!';
+        gameMsg.style.color = 'var(--success)';
+      } else {
+        result = 'miss';
+        gameMsg.textContent = '❌ Para fora! Ajuste o timing.';
+        gameMsg.style.color = 'var(--accent)';
+      }
+      attempts++;
+      updateStats();
+      setTimeout(resetBall, 1500);
+    }
+  }
+
+  drawField();
+  drawGK();
+  drawBall();
+  drawPowerBar();
+  requestAnimationFrame(update);
+}
+
+function updateStats() {
+  scoreEl.textContent = score;
+  attemptsEl.textContent = attempts;
+  accuracyEl.textContent = attempts ? Math.round((score / attempts) * 100) + '%' : '0%';
+}
+
+function resetBall() {
+  ballY = 300;
+  ballX = 320;
+  power = 0;
+  powerDir = 1;
+  shooting = false;
+  ballActive = false;
+  result = null;
+  gameMsg.textContent = 'Clique ou toque para chutar no momento certo!';
+  gameMsg.style.color = 'var(--gold-light)';
+  gkSpeed = 2.5 + Math.random() * 2.5;
+}
+
+function startKick() {
+  if (ballActive || result) return;
+  if (!shooting) {
+    shooting = true;
+    power = 0;
+    powerDir = 1;
+    gameMsg.textContent = 'Segure... solte no momento certo!';
+  } else {
+    shooting = false;
+    ballActive = true;
+  }
+}
+
+canvas.addEventListener('click', startKick);
+canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startKick(); });
+kickBtn.addEventListener('click', startKick);
+resetBtn.addEventListener('click', () => {
+  score = 0; attempts = 0;
+  updateStats();
+  resetBall();
+});
+
+update();
