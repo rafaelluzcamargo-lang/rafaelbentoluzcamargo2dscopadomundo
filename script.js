@@ -26,6 +26,55 @@ const champions = [
 ];
 
 const paths = {
+  1930: {
+    nation: "Uruguai", flag: "🇺🇾",
+    stages: [
+      { name: "Grupo", score: "1–0", opp: "Peru" },
+      { name: "Grupo", score: "4–0", opp: "Romênia" },
+      { name: "Semifinal", score: "6–1", opp: "Iugoslávia" },
+      { name: "Final", score: "4–2", opp: "Argentina" }
+    ]
+  },
+
+    1934: {
+  nation: "Itália", flag: "🇮🇹",
+  stages: [
+    { name: "Oitavas", score: "7–1", opp: "EUA" },
+    { name: "Quartas", score: "1–1 (1–0 pro)", opp: "Espanha" },
+    { name: "Semifinal", score: "1–0", opp: "Áustria" },
+    { name: "Final", score: "2–1 (pro)", opp: "Tchecoslováquia" }
+  ]
+},
+
+  1938: {
+  nation: "Itália", flag: "🇮🇹",
+  stages: [
+    { name: "Oitavas", score: "2–1 (pro)", opp: "Noruega" },
+    { name: "Quartas", score: "3–1", opp: "França" },
+    { name: "Semifinal", score: "2–1", opp: "Brasil" },
+    { name: "Final", score: "4–2", opp: "Hungria" }
+  ]
+},
+  1950: {
+    nation: "Uruguai", flag: "🇺🇾",
+    stages: [
+      { name: "Grupo", score: "8–0", opp: "Bolívia" },
+      { name: "Final Group", score: "2–2", opp: "Espanha" },
+      { name: "Final Group", score: "3–2", opp: "Suécia" },
+      { name: "Final Group", score: "2–1", opp: "Brasil" }
+    ]
+  },
+  1954: {
+    nation: "Alemanha Oc.", flag: "🇩🇪",
+    stages: [
+      { name: "Grupo", score: "4–1", opp: "Turquia" },
+      { name: "Grupo", score: "3–8", opp: "Hungria" },
+      { name: "Play-off", score: "7–2", opp: "Turquia" },
+      { name: "Quartas", score: "2–0", opp: "Iugoslávia" },
+      { name: "Semifinal", score: "6–1", opp: "Áustria" },
+      { name: "Final", score: "3–2", opp: "Hungria" }
+    ]
+  },
   1958: {
     nation: "Brasil", flag: "🇧🇷",
     stages: [
@@ -35,6 +84,17 @@ const paths = {
       { name: "Quartas", score: "1–0", opp: "País de Gales" },
       { name: "Semifinal", score: "5–2", opp: "França" },
       { name: "Final", score: "5–2", opp: "Suécia" }
+    ]
+  },
+  1962: {
+    nation: "Brasil", flag: "🇧🇷",
+    stages: [
+      { name: "Grupo", score: "2–0", opp: "México" },
+      { name: "Grupo", score: "0–0", opp: "Tchecoslováquia" },
+      { name: "Grupo", score: "2–1", opp: "Espanha" },
+      { name: "Quartas", score: "3–1", opp: "Inglaterra" },
+      { name: "Semifinal", score: "4–2", opp: "Chile" },
+      { name: "Final", score: "3–1", opp: "Tchecoslováquia" }
     ]
   },
   1966: {
@@ -51,12 +111,48 @@ const paths = {
   1970: {
     nation: "Brasil", flag: "🇧🇷",
     stages: [
-      { name: "Grupo 3", score: "4–1", opp: "Tchecoslováquia" },
-      { name: "Grupo 3", score: "1–0", opp: "Inglaterra" },
-      { name: "Grupo 3", score: "3–2", opp: "Romênia" },
+      { name: "Grupo", score: "4–1", opp: "Tchecoslováquia" },
+      { name: "Grupo", score: "1–0", opp: "Inglaterra" },
+      { name: "Grupo", score: "3–2", opp: "Romênia" },
       { name: "Quartas", score: "4–2", opp: "Peru" },
       { name: "Semifinal", score: "3–1", opp: "Uruguai" },
       { name: "Final", score: "4–1", opp: "Itália" }
+    ]
+  },
+  1974: {
+    nation: "Alemanha Oc.", flag: "🇩🇪",
+    stages: [
+      { name: "Grupo", score: "1–0", opp: "Chile" },
+      { name: "Grupo", score: "3–0", opp: "Austrália" },
+      { name: "Grupo", score: "0–1", opp: "Alemanha Oriental" },
+      { name: "2ª Fase", score: "2–0", opp: "Iugoslávia" },
+      { name: "2ª Fase", score: "4–2", opp: "Suécia" },
+      { name: "2ª Fase", score: "1–0", opp: "Polônia" },
+      { name: "Final", score: "2–1", opp: "Holanda" }
+    ]
+  },
+  1978: {
+    nation: "Argentina", flag: "🇦🇷",
+    stages: [
+      { name: "Grupo", score: "2–1", opp: "Hungria" },
+      { name: "Grupo", score: "2–1", opp: "França" },
+      { name: "Grupo", score: "0–1", opp: "Itália" },
+      { name: "2ª Fase", score: "2–0", opp: "Polônia" },
+      { name: "2ª Fase", score: "0–0", opp: "Brasil" },
+      { name: "2ª Fase", score: "6–0", opp: "Peru" },
+      { name: "Final", score: "3–1 (pro)", opp: "Holanda" }
+    ]
+  },
+  1982: {
+    nation: "Itália", flag: "🇮🇹",
+    stages: [
+      { name: "Grupo", score: "0–0", opp: "Polônia" },
+      { name: "Grupo", score: "1–1", opp: "Peru" },
+      { name: "Grupo", score: "1–1", opp: "Camarões" },
+      { name: "2ª Fase", score: "2–1", opp: "Argentina" },
+      { name: "2ª Fase", score: "3–2", opp: "Brasil" },
+      { name: "Semifinal", score: "2–0", opp: "Polônia" },
+      { name: "Final", score: "3–1", opp: "Alemanha Oc." }
     ]
   },
   1986: {
@@ -71,6 +167,30 @@ const paths = {
       { name: "Final", score: "3–2", opp: "Alemanha Oc." }
     ]
   },
+  1990: {
+    nation: "Alemanha Oc.", flag: "🇩🇪",
+    stages: [
+      { name: "Grupo", score: "4–1", opp: "Iugoslávia" },
+      { name: "Grupo", score: "5–1", opp: "Emirados Árabes" },
+      { name: "Grupo", score: "1–0", opp: "Colômbia" },
+      { name: "Oitavas", score: "2–1", opp: "Holanda" },
+      { name: "Quartas", score: "1–0", opp: "Tchecoslováquia" },
+      { name: "Semifinal", score: "1–1 (4–3 pen)", opp: "Inglaterra" },
+      { name: "Final", score: "1–0", opp: "Argentina" }
+    ]
+  },
+  1994: {
+    nation: "Brasil", flag: "🇧🇷",
+    stages: [
+      { name: "Grupo", score: "2–0", opp: "Rússia" },
+      { name: "Grupo", score: "3–0", opp: "Camarões" },
+      { name: "Grupo", score: "1–1", opp: "Suécia" },
+      { name: "Oitavas", score: "1–0", opp: "EUA" },
+      { name: "Quartas", score: "3–2", opp: "Holanda" },
+      { name: "Semifinal", score: "1–0", opp: "Suécia" },
+      { name: "Final", score: "0–0 (3–2 pen)", opp: "Itália" }
+    ]
+  },
   1998: {
     nation: "França", flag: "🇫🇷",
     stages: [
@@ -78,7 +198,7 @@ const paths = {
       { name: "Grupo", score: "4–0", opp: "Arábia Saudita" },
       { name: "Grupo", score: "2–1", opp: "Dinamarca" },
       { name: "Oitavas", score: "1–0", opp: "Paraguai" },
-      { name: "Quartas", score: "0–0 (3–4 pen)", opp: "Itália" },
+      { name: "Quartas", score: "0–0 (4–3 pen)", opp: "Itália" },
       { name: "Semifinal", score: "2–1", opp: "Croácia" },
       { name: "Final", score: "3–0", opp: "Brasil" }
     ]
@@ -93,6 +213,18 @@ const paths = {
       { name: "Quartas", score: "2–1", opp: "Inglaterra" },
       { name: "Semifinal", score: "1–0", opp: "Turquia" },
       { name: "Final", score: "2–0", opp: "Alemanha" }
+    ]
+  },
+  2006: {
+    nation: "Itália", flag: "🇮🇹",
+    stages: [
+      { name: "Grupo", score: "2–0", opp: "Gana" },
+      { name: "Grupo", score: "1–1", opp: "EUA" },
+      { name: "Grupo", score: "2–0", opp: "Rep. Tcheca" },
+      { name: "Oitavas", score: "1–0", opp: "Austrália" },
+      { name: "Quartas", score: "3–0", opp: "Ucrânia" },
+      { name: "Semifinal", score: "2–0 (pro)", opp: "Alemanha" },
+      { name: "Final", score: "1–1 (5–3 pen)", opp: "França" }
     ]
   },
   2010: {
