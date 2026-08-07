@@ -1,129 +1,1480 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="bg-background">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#084a29" />
-  <meta name="description" content="Site educativo sobre a Copa do Mundo: historia de 1930 a 2026, formato e classificacao, jogos detalhados dos campeoes e recordes atualizados." />
-  <title>Copa do Mundo: da criacao a 2026 | Guia Completo</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>World History — A História da Copa do Mundo</title>
+  <meta name="description" content="A história completa da Copa do Mundo FIFA: criação, campeões, recordes, caminhos ao título, bolas oficiais e muito mais.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0b0f;
+      --bg-card: #12141c;
+      --bg-elevated: #1a1d27;
+      --gold: #d4af37;
+      --gold-light: #f0d78c;
+      --gold-dark: #a68b2c;
+      --text: #f5f5f7;
+      --text-muted: #a0a3b1;
+      --accent: #e63946;
+      --success: #2ecc71;
+      --border: rgba(212, 175, 55, 0.15);
+      --glass: rgba(26, 29, 39, 0.75);
+      --radius: 16px;
+      --shadow: 0 20px 50px rgba(0,0,0,0.45);
+      --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ===== NAV ===== */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 1rem 2rem;
+      background: rgba(10, 11, 15, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: var(--transition);
+    }
+    .nav.scrolled { padding: 0.7rem 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .logo span { color: var(--text); font-weight: 400; }
+    .nav-links {
+      display: flex;
+      gap: 1.8rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color var(--transition);
+      position: relative;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: var(--gold);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--gold);
+      font-size: 1.6rem;
+      cursor: pointer;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      padding: 6rem 2rem 4rem;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(230, 57, 70, 0.06) 0%, transparent 40%),
+        var(--bg);
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.5;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 900px; }
+    .hero-badge {
+      display: inline-block;
+      padding: 0.4rem 1.2rem;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      color: var(--gold);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1.2rem;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 2rem;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #0a0b0f;
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform var(--transition), box-shadow var(--transition);
+      font-size: 1rem;
+    }
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(212, 175, 55, 0.35);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--gold);
+      color: var(--gold);
+      margin-left: 1rem;
+    }
+    .btn-outline:hover {
+      background: rgba(212, 175, 55, 0.1);
+      box-shadow: none;
+    }
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* ===== SECTIONS ===== */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+    .section-header p {
+      color: var(--text-muted);
+      max-width: 550px;
+      margin: 0 auto;
+    }
+    .divider {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 1rem auto;
+    }
+
+    /* ===== HISTORY ===== */
+    .history-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .history-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      box-shadow: var(--shadow);
+    }
+    .history-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--gold-light);
+      margin-bottom: 1rem;
+    }
+    .history-card p {
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2rem;
+      padding-left: 1.5rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.35rem;
+      top: 0.4rem;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 3px solid var(--bg);
+      box-shadow: 0 0 0 3px rgba(212,175,55,0.3);
+    }
+    .timeline-item strong {
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    .timeline-item p { color: var(--text-muted); font-size: 0.95rem; }
+
+    /* ===== CHAMPIONS GALLERY ===== */
+    .champions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1.2rem;
+    }
+    .champion-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .champion-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--gold);
+      box-shadow: 0 15px 40px rgba(212,175,55,0.15);
+    }
+    .champion-card .year {
+      font-size: 0.8rem;
+      color: var(--gold);
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    .champion-card .flag {
+      font-size: 2.5rem;
+      margin: 0.6rem 0;
+      display: block;
+    }
+    .champion-card .nation {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .champion-card .titles {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+    }
+
+    /* ===== RECORDS ===== */
+    .records-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .record-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      transition: var(--transition);
+    }
+    .record-card:hover {
+      border-color: rgba(212,175,55,0.4);
+      transform: translateY(-4px);
+    }
+    .record-card .icon {
+      font-size: 2rem;
+      margin-bottom: 0.8rem;
+    }
+    .record-card h4 {
+      color: var(--gold);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+    .record-card .value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    .record-card .detail {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* ===== PATH OF CHAMPIONS ===== */
+    .path-selector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+    }
+    .path-btn {
+      padding: 0.5rem 1rem;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: var(--transition);
+    }
+    .path-btn:hover, .path-btn.active {
+      background: rgba(212,175,55,0.15);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .path-display {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      min-height: 280px;
+    }
+    .path-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .path-header .flag { font-size: 3rem; }
+    .path-header h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+    }
+    .path-header span { color: var(--text-muted); font-size: 0.95rem; }
+    .path-stages {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: stretch;
+    }
+    .stage {
+      flex: 1;
+      min-width: 140px;
+      background: var(--bg-elevated);
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+      border: 1px solid transparent;
+      transition: var(--transition);
+    }
+    .stage.final {
+      border-color: var(--gold);
+      background: rgba(212,175,55,0.08);
+    }
+    .stage .stage-name {
+      font-size: 0.75rem;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.4rem;
+    }
+    .stage .score {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .stage .opp {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* ===== INFOGRAPHICS ===== */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .stat-box {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+    .stat-box .number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-box .label {
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+    }
+    .bar-chart {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+    }
+    .bar-item {
+      margin-bottom: 1.2rem;
+    }
+    .bar-item:last-child { margin-bottom: 0; }
+    .bar-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+    }
+    .bar-track {
+      height: 10px;
+      background: var(--bg-elevated);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+      border-radius: 5px;
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ===== GALLERY ===== */
+    .gallery-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .tab-btn {
+      padding: 0.6rem 1.5rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 50px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .tab-btn.active {
+      background: rgba(212,175,55,0.15);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1.2rem;
+    }
+    .gallery-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      transition: var(--transition);
+    }
+    .gallery-item:hover {
+      border-color: var(--gold);
+      transform: translateY(-4px);
+    }
+    .gallery-item .visual {
+      font-size: 3rem;
+      margin-bottom: 0.8rem;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .gallery-item .name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .gallery-item .year {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* ===== MINI GAME ===== */
+    .game-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .game-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+    .game-stats span { color: var(--gold); font-weight: 700; }
+    #gameCanvas {
+      background: linear-gradient(to bottom, #1a3a1a 0%, #0d2818 100%);
+      border-radius: 12px;
+      max-width: 100%;
+      display: block;
+      margin: 0 auto 1.5rem;
+      cursor: pointer;
+      border: 2px solid var(--border);
+    }
+    .game-controls {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .game-msg {
+      min-height: 1.5rem;
+      margin-bottom: 1rem;
+      font-weight: 500;
+      color: var(--gold-light);
+    }
+
+    /* ===== 2026 ===== */
+    .wc2026 {
+      background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(230,57,70,0.05));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 3rem;
+      text-align: center;
+    }
+    .wc2026 h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .hosts {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+    .host { text-align: center; }
+    .host .flag { font-size: 3rem; }
+    .host .name { font-weight: 600; margin-top: 0.3rem; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+      margin-top: 4rem;
+    }
+    footer p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    footer .logo {
+      margin-bottom: 1rem;
+      justify-content: center;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .history-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0; right: 0;
+        background: var(--bg-card);
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--border);
+        gap: 1rem;
+      }
+      .menu-toggle { display: block; }
+      .btn-outline { margin-left: 0; margin-top: 0.8rem; }
+      .hero .btn-group { display: flex; flex-direction: column; align-items: center; }
+    }
+    @media (max-width: 600px) {
+      section { padding: 4rem 1.2rem; }
+      .path-stages { flex-direction: column; }
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body>
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="logo">🏆 World <span>History</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#historia">História</a></li>
+      <li><a href="#campeoes">Campeões</a></li>
+      <li><a href="#recordes">Recordes</a></li>
+      <li><a href="#caminho">Caminho</a></li>
+      <li><a href="#stats">Estatísticas</a></li>
+      <li><a href="#galeria">Galeria</a></li>
+      <li><a href="#game">Mini-Game</a></li>
+      <li><a href="#2026">2026</a></li>
+    </ul>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
+  </nav>
 
-  <!-- ============ CABECALHO E NAVEGACAO ============ -->
-  <header class="topo">
-    <div class="nav-container">
-      <div class="logo">
-        <span class="bola" aria-hidden="true">&#9917;</span>
-        <span>Copa do Mundo 1930&ndash;2026</span>
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">Desde 1930 · Até 2026</div>
+      <h1>World History</h1>
+      <p>A jornada completa da maior competição de futebol do planeta. Da visão de Jules Rimet às arenas da América do Norte.</p>
+      <div class="btn-group">
+        <a href="#historia" class="btn">Explorar História</a>
+        <a href="#game" class="btn btn-outline">Jogar Mini-Game</a>
       </div>
-      <nav aria-label="Navegacao principal">
-        <ul>
-          <li><a href="#historia">Historia</a></li>
-          <li><a href="#formato">Formato</a></li>
-          <li><a href="#jogos">Jogos dos Campeoes</a></li>
-          <li><a href="#recordes">Recordes</a></li>
-        </ul>
-      </nav>
     </div>
+    <div class="scroll-hint">↓ Role para descobrir</div>
   </header>
 
-  <!-- ============ HERO ============ -->
-  <section class="hero" aria-label="Introducao">
-    <h1>A historia completa da Copa do Mundo, da primeira bola em 1930 ate 2026</h1>
-    <p>
-      Entenda de onde veio o maior torneio de futebol do planeta, como ele funciona,
-      os detalhes dos jogos de cada campeao e os recordes que atravessam gerações.
-    </p>
-    <span class="selo">Dados atualizados ate 31/07/2026</span>
+  <!-- HISTÓRIA -->
+  <section id="historia">
+    <div class="section-header fade-up">
+      <h2>A Criação da Copa</h2>
+      <div class="divider"></div>
+      <p>Como nasceu o torneio que uniria o mundo através do futebol</p>
+    </div>
+    <div class="history-grid fade-up">
+      <div class="history-card">
+        <h3>Jules Rimet — O Pai da Copa</h3>
+        <p>Jules Rimet (1873–1956), advogado e presidente da FIFA por 33 anos (1921–1954), foi a força motriz por trás da criação da Copa do Mundo. Inspirado pelos ideais de união entre as nações e frustrado com as restrições amadoras dos Jogos Olímpicos, ele sonhava com um torneio profissional aberto a todas as seleções afiliadas à FIFA.</p>
+        <p>Apoiando-o de perto estava Henri Delaunay, secretário-geral da Federação Francesa de Futebol, que também defendia fervorosamente a ideia de um campeonato mundial independente.</p>
+        <p>Em 28 de maio de 1928, no Congresso da FIFA em Amsterdã, a proposta foi aprovada por 25 votos a 5. Em 1929, no Congresso de Barcelona, o Uruguai foi escolhido como sede da primeira edição — em parte por ter vencido os torneios olímpicos de 1924 e 1928, e por se oferecer a cobrir os custos de viagem das seleções europeias.</p>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <strong>1904</strong>
+          <p>Fundação da FIFA. A ideia de um torneio mundial já existia, mas permanecia no papel.</p>
+        </div>
+        <div class="timeline-item">
+          <strong>1920–1921</strong>
+          <p>Rimet apresenta a ideia nos Jogos de Antuérpia e assume a presidência da FIFA.</p>
+        </div>
+        <div class="timeline-item">
+          <strong>1928</strong>
+          <p>Congresso de Amsterdã aprova a criação da Copa do Mundo a cada quatro anos.</p>
+        </div>
+        <div class="timeline-item">
+          <strong>13 de julho de 1930</strong>
+          <p>Início da primeira Copa, no Uruguai. 13 seleções participam. O troféu (Jules Rimet) viaja na mala do próprio Rimet a bordo do Conte Verde.</p>
+        </div>
+        <div class="timeline-item">
+          <strong>1970</strong>
+          <p>Brasil conquista o tri e fica definitivamente com o Troféu Jules Rimet. Nasce o novo troféu (Silvio Gazzaniga).</p>
+        </div>
+        <div class="timeline-item">
+          <strong>2026</strong>
+          <p>Primeira Copa com 48 seleções e três países-sede: EUA, Canadá e México.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <main>
+  <!-- CAMPEÕES -->
+  <section id="campeoes">
+    <div class="section-header fade-up">
+      <h2>Galeria de Campeões</h2>
+      <div class="divider"></div>
+      <p>Todas as seleções que ergueram o troféu (1930–2022)</p>
+    </div>
+    <div class="champions-grid fade-up" id="championsGrid"></div>
+  </section>
 
-    <!-- ============ SECAO: HISTORIA ============ -->
-    <section id="historia">
-      <h2 class="section-titulo">Historia e Evolucao</h2>
-      <p class="section-sub">
-        Uma linha do tempo com todas as edicoes da Copa do Mundo, do torneio de convidados
-        no Uruguai em 1930 ate a primeira Copa com 48 selecoes e tres paises-sede em 2026.
-      </p>
-      <!-- A timeline e preenchida via JavaScript (renderHistoria) -->
-      <div id="timeline" class="timeline"></div>
-    </section>
-
-    <!-- ============ SECAO: FORMATO E CLASSIFICACAO ============ -->
-    <section id="formato">
-      <h2 class="section-titulo">Formato e Classificacao</h2>
-      <p class="section-sub">
-        Como funciona a Copa do Mundo de 2026: da fase de grupos ao mata-mata, incluindo
-        os criterios de desempate e a nova estrutura ampliada.
-      </p>
-      <!-- Os cartoes de regras sao preenchidos via JavaScript (renderFormato) -->
-      <div id="formato-grid" class="grid cols-3"></div>
-    </section>
-
-    <!-- ============ SECAO: JOGOS DOS CAMPEOES ============ -->
-    <section id="jogos">
-      <h2 class="section-titulo">Jogos dos Campeoes</h2>
-      <p class="section-sub">
-        Dados minuciosos das partidas mais marcantes de cada pais campeao: gols, assistencias,
-        cartoes, substituicoes, lesoes e arbitragem. Use a busca e o filtro para explorar.
-      </p>
-
-      <!-- Filtros interativos (busca por texto e por pais) -->
-      <div class="filtros">
-        <label class="sr-only" for="busca-jogo">Buscar jogos</label>
-        <input type="search" id="busca-jogo" placeholder="Buscar por adversario, fase, ano, jogador..." />
-
-        <label class="sr-only" for="filtro-pais">Filtrar por pais campeao</label>
-        <select id="filtro-pais"></select>
+  <!-- RECORDES -->
+  <section id="recordes">
+    <div class="section-header fade-up">
+      <h2>Recordes Gerais</h2>
+      <div class="divider"></div>
+      <p>Os números que marcaram a história da competição</p>
+    </div>
+    <div class="records-grid fade-up">
+      <div class="record-card">
+        <div class="icon">⚽</div>
+        <h4>Mais Gols (Seleção)</h4>
+        <div class="value">Brasil</div>
+        <div class="detail">Mais de 230 gols em todas as edições</div>
       </div>
+      <div class="record-card">
+        <div class="icon">👟</div>
+        <h4>Maior Artilheiro</h4>
+        <div class="value">Miroslav Klose</div>
+        <div class="detail">16 gols (Alemanha) — recorde histórico clássico</div>
+      </div>
+      <div class="record-card">
+        <div class="icon">🎯</div>
+        <h4>Mais Assistências</h4>
+        <div class="value">Lionel Messi</div>
+        <div class="detail">Líder histórico de assistências na Copa</div>
+      </div>
+      <div class="record-card">
+        <div class="icon">🏟️</div>
+        <h4>Mais Partidas</h4>
+        <div class="value">Lionel Messi</div>
+        <div class="detail">Recorde de jogos disputados em Copas</div>
+      </div>
+      <div class="record-card">
+        <div class="icon">🥇</div>
+        <h4>Mais Títulos</h4>
+        <div class="value">Brasil — 5</div>
+        <div class="detail">1958, 1962, 1970, 1994, 2002</div>
+      </div>
+      <div class="record-card">
+        <div class="icon">🔥</div>
+        <h4>Mais Gols em 1 Edição</h4>
+        <div class="value">Just Fontaine</div>
+        <div class="detail">13 gols (França, 1958)</div>
+      </div>
+      <div class="record-card">
+        <div class="icon">🟨</div>
+        <h4>Mais Cartões</h4>
+        <div class="value">Javier Mascherano</div>
+        <div class="detail">7 cartões amarelos em Copas</div>
+      </div>
+      <div class="record-card">
+        <div class="icon">🌍</div>
+        <h4>Única em Todas</h4>
+        <div class="value">Brasil</div>
+        <div class="detail">Participou de todas as edições desde 1930</div>
+      </div>
+    </div>
+  </section>
 
-      <!-- A lista de jogos e preenchida via JavaScript (renderJogos) -->
-      <div id="lista-jogos"></div>
-    </section>
+  <!-- CAMINHO DOS CAMPEÕES -->
+  <section id="caminho">
+    <div class="section-header fade-up">
+      <h2>Caminho dos Campeões</h2>
+      <div class="divider"></div>
+      <p>Do grupo ao título — selecione uma edição</p>
+    </div>
+    <div class="path-selector fade-up" id="pathSelector"></div>
+    <div class="path-display fade-up" id="pathDisplay">
+      <p style="text-align:center;color:var(--text-muted)">Selecione um ano acima para ver o caminho completo do campeão.</p>
+    </div>
+  </section>
 
-    <!-- ============ SECAO: RECORDES ============ -->
-    <section id="recordes">
-      <h2 class="section-titulo">Recordes Atualizados</h2>
-      <p class="section-sub">
-        Maiores artilheiros, jogadores com mais partidas, selecoes mais vencedoras e outras
-        marcas historicas. Navegue pelas abas abaixo. (Atualizado ate 31/07/2026.)
+  <!-- ESTATÍSTICAS -->
+  <section id="stats">
+    <div class="section-header fade-up">
+      <h2>Infográficos & Estatísticas</h2>
+      <div class="divider"></div>
+      <p>Números que contam a história</p>
+    </div>
+    <div class="stats-row fade-up">
+      <div class="stat-box">
+        <div class="number" data-count="22">0</div>
+        <div class="label">Edições (até 2022)</div>
+      </div>
+      <div class="stat-box">
+        <div class="number" data-count="8">0</div>
+        <div class="label">Seleções Campeãs</div>
+      </div>
+      <div class="stat-box">
+        <div class="number" data-count="5">0</div>
+        <div class="label">Títulos do Brasil</div>
+      </div>
+      <div class="stat-box">
+        <div class="number" data-count="48">0</div>
+        <div class="label">Seleções em 2026</div>
+      </div>
+    </div>
+    <div class="bar-chart fade-up">
+      <h3 style="margin-bottom:1.5rem;color:var(--gold);font-family:'Playfair Display',serif">Títulos por Seleção</h3>
+      <div class="bar-item">
+        <div class="bar-label"><span>🇧🇷 Brasil</span><span>5</span></div>
+        <div class="bar-track"><div class="bar-fill" data-width="100"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label"><span>🇩🇪 Alemanha</span><span>4</span></div>
+        <div class="bar-track"><div class="bar-fill" data-width="80"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label"><span>🇮🇹 Itália</span><span>4</span></div>
+        <div class="bar-track"><div class="bar-fill" data-width="80"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label"><span>🇦🇷 Argentina</span><span>3</span></div>
+        <div class="bar-track"><div class="bar-fill" data-width="60"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label"><span>🇫🇷 França</span><span>2</span></div>
+        <div class="bar-track"><div class="bar-fill" data-width="40"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label"><span>🇺🇾 Uruguai</span><span>2</span></div>
+        <div class="bar-track"><div class="bar-fill" data-width="40"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label"><span>🇪🇸 Espanha / 🏴󠁧󠁢󠁥󠁮󠁧󠁿 Inglaterra</span><span>1</span></div>
+        <div class="bar-track"><div class="bar-fill" data-width="20"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERIA -->
+  <section id="galeria">
+    <div class="section-header fade-up">
+      <h2>Bolas Oficiais & Logos</h2>
+      <div class="divider"></div>
+      <p>Os símbolos de cada edição</p>
+    </div>
+    <div class="gallery-tabs fade-up">
+      <button class="tab-btn active" data-tab="balls">Bolas Oficiais</button>
+      <button class="tab-btn" data-tab="stadiums">Estádios Icônicos</button>
+    </div>
+    <div class="gallery-grid fade-up" id="galleryGrid"></div>
+  </section>
+
+  <!-- MINI-GAME -->
+  <section id="game">
+    <div class="section-header fade-up">
+      <h2>Mini-Game: Pênalti Decisivo</h2>
+      <div class="divider"></div>
+      <p>Não é quiz. É habilidade. Acerte o timing e marque o gol!</p>
+    </div>
+    <div class="game-container fade-up">
+      <div class="game-stats">
+        <div>Gols: <span id="score">0</span></div>
+        <div>Tentativas: <span id="attempts">0</span></div>
+        <div>Precisão: <span id="accuracy">0%</span></div>
+      </div>
+      <div class="game-msg" id="gameMsg">Clique ou toque para chutar no momento certo!</div>
+      <canvas id="gameCanvas" width="640" height="360"></canvas>
+      <div class="game-controls">
+        <button class="btn" id="kickBtn">⚽ Chutar!</button>
+        <button class="btn btn-outline" id="resetBtn">Reiniciar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2026 -->
+  <section id="2026">
+    <div class="section-header fade-up">
+      <h2>Copa do Mundo 2026</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="wc2026 fade-up">
+      <h3>A Maior Copa da História</h3>
+      <p style="color:var(--text-muted);max-width:600px;margin:0 auto 1.5rem">
+        Pela primeira vez, três países sediam juntos: Estados Unidos, Canadá e México.
+        Formato expandido para <strong style="color:var(--gold)">48 seleções</strong> em 12 grupos de 4.
+        Top 2 de cada grupo + 8 melhores terceiros avançam para as oitavas de 32.
+        Total de 104 jogos.
       </p>
-
-      <!-- Botoes das abas -->
-      <div class="tabs" role="tablist" aria-label="Categorias de recordes">
-        <button class="tab-btn ativa" role="tab" aria-selected="true" data-alvo="painel-artilheiros">Artilheiros</button>
-        <button class="tab-btn" role="tab" aria-selected="false" data-alvo="painel-partidas">Mais partidas</button>
-        <button class="tab-btn" role="tab" aria-selected="false" data-alvo="painel-selecoes">Selecoes</button>
-        <button class="tab-btn" role="tab" aria-selected="false" data-alvo="painel-diversos">Curiosidades</button>
+      <div class="hosts">
+        <div class="host"><div class="flag">🇺🇸</div><div class="name">Estados Unidos</div></div>
+        <div class="host"><div class="flag">🇨🇦</div><div class="name">Canadá</div></div>
+        <div class="host"><div class="flag">🇲🇽</div><div class="name">México</div></div>
       </div>
+      <p style="color:var(--text-muted);font-size:0.95rem">
+        Bola oficial: <strong style="color:var(--gold)">adidas Trionda</strong> — “três ondas”, homenagem às três nações-sede.
+      </p>
+    </div>
+  </section>
 
-      <!-- Paineis das abas (preenchidos via renderRecordes) -->
-      <div class="card">
-        <div id="painel-artilheiros" class="tab-panel ativo" role="tabpanel"></div>
-        <div id="painel-partidas" class="tab-panel" role="tabpanel"></div>
-        <div id="painel-selecoes" class="tab-panel" role="tabpanel"></div>
-        <div id="painel-diversos" class="tab-panel" role="tabpanel"></div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ============ RODAPE ============ -->
   <footer>
-    <p>
-      Conteudo educativo sobre a Copa do Mundo &bull; Historia, formato, jogos e recordes ate 31/07/2026.
-    </p>
-    <p>Feito com HTML, CSS e JavaScript puros, para ajudar mais pessoas a entenderem o maior torneio do futebol.</p>
+    <div class="logo">🏆 World <span>History</span></div>
+    <p>Feito com paixão pelo futebol · HTML, CSS & JavaScript puros</p>
+    <p style="margin-top:0.5rem;font-size:0.8rem">Dados históricos até 2022 · Formato e informações de 2026 incluídos</p>
   </footer>
 
-  <!-- Botao flutuante de voltar ao topo -->
-  <button id="voltar-topo" aria-label="Voltar ao topo">&#8593;</button>
+  <script>
+    // ===== DATA =====
+    const champions = [
+      { year: 1930, nation: "Uruguai", flag: "🇺🇾", titles: 2 },
+      { year: 1934, nation: "Itália", flag: "🇮🇹", titles: 4 },
+      { year: 1938, nation: "Itália", flag: "🇮🇹", titles: 4 },
+      { year: 1950, nation: "Uruguai", flag: "🇺🇾", titles: 2 },
+      { year: 1954, nation: "Alemanha Oc.", flag: "🇩🇪", titles: 4 },
+      { year: 1958, nation: "Brasil", flag: "🇧🇷", titles: 5 },
+      { year: 1962, nation: "Brasil", flag: "🇧🇷", titles: 5 },
+      { year: 1966, nation: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", titles: 1 },
+      { year: 1970, nation: "Brasil", flag: "🇧🇷", titles: 5 },
+      { year: 1974, nation: "Alemanha Oc.", flag: "🇩🇪", titles: 4 },
+      { year: 1978, nation: "Argentina", flag: "🇦🇷", titles: 3 },
+      { year: 1982, nation: "Itália", flag: "🇮🇹", titles: 4 },
+      { year: 1986, nation: "Argentina", flag: "🇦🇷", titles: 3 },
+      { year: 1990, nation: "Alemanha Oc.", flag: "🇩🇪", titles: 4 },
+      { year: 1994, nation: "Brasil", flag: "🇧🇷", titles: 5 },
+      { year: 1998, nation: "França", flag: "🇫🇷", titles: 2 },
+      { year: 2002, nation: "Brasil", flag: "🇧🇷", titles: 5 },
+      { year: 2006, nation: "Itália", flag: "🇮🇹", titles: 4 },
+      { year: 2010, nation: "Espanha", flag: "🇪🇸", titles: 1 },
+      { year: 2014, nation: "Alemanha", flag: "🇩🇪", titles: 4 },
+      { year: 2018, nation: "França", flag: "🇫🇷", titles: 2 },
+      { year: 2022, nation: "Argentina", flag: "🇦🇷", titles: 3 }
+    ];
 
-  <!-- ============ SCRIPT ============ -->
-  <!-- Unico arquivo JS: contem os dados e a logica de interface -->
-  <script src="script.js"></script>
+    const paths = {
+      1970: {
+        nation: "Brasil", flag: "🇧🇷",
+        stages: [
+          { name: "Grupo 3", score: "4–1", opp: "Tchecoslováquia" },
+          { name: "Grupo 3", score: "1–0", opp: "Inglaterra" },
+          { name: "Grupo 3", score: "3–2", opp: "Romênia" },
+          { name: "Quartas", score: "4–2", opp: "Peru" },
+          { name: "Semifinal", score: "3–1", opp: "Uruguai" },
+          { name: "Final", score: "4–1", opp: "Itália" }
+        ]
+      },
+      1986: {
+        nation: "Argentina", flag: "🇦🇷",
+        stages: [
+          { name: "Grupo", score: "3–1", opp: "Coreia do Sul" },
+          { name: "Grupo", score: "1–1", opp: "Itália" },
+          { name: "Grupo", score: "2–0", opp: "Bulgária" },
+          { name: "Oitavas", score: "1–0", opp: "Uruguai" },
+          { name: "Quartas", score: "2–1", opp: "Inglaterra" },
+          { name: "Semifinal", score: "2–0", opp: "Bélgica" },
+          { name: "Final", score: "3–2", opp: "Alemanha Oc." }
+        ]
+      },
+      1998: {
+        nation: "França", flag: "🇫🇷",
+        stages: [
+          { name: "Grupo", score: "3–0", opp: "África do Sul" },
+          { name: "Grupo", score: "4–0", opp: "Arábia Saudita" },
+          { name: "Grupo", score: "2–1", opp: "Dinamarca" },
+          { name: "Oitavas", score: "1–0", opp: "Paraguai" },
+          { name: "Quartas", score: "0–0 (3–4 pen)", opp: "Itália" },
+          { name: "Semifinal", score: "2–1", opp: "Croácia" },
+          { name: "Final", score: "3–0", opp: "Brasil" }
+        ]
+      },
+      2002: {
+        nation: "Brasil", flag: "🇧🇷",
+        stages: [
+          { name: "Grupo", score: "2–1", opp: "Turquia" },
+          { name: "Grupo", score: "4–0", opp: "China" },
+          { name: "Grupo", score: "5–2", opp: "Costa Rica" },
+          { name: "Oitavas", score: "2–0", opp: "Bélgica" },
+          { name: "Quartas", score: "2–1", opp: "Inglaterra" },
+          { name: "Semifinal", score: "1–0", opp: "Turquia" },
+          { name: "Final", score: "2–0", opp: "Alemanha" }
+        ]
+      },
+      2010: {
+        nation: "Espanha", flag: "🇪🇸",
+        stages: [
+          { name: "Grupo", score: "0–1", opp: "Suíça" },
+          { name: "Grupo", score: "2–0", opp: "Honduras" },
+          { name: "Grupo", score: "2–1", opp: "Chile" },
+          { name: "Oitavas", score: "1–0", opp: "Portugal" },
+          { name: "Quartas", score: "1–0", opp: "Paraguai" },
+          { name: "Semifinal", score: "1–0", opp: "Alemanha" },
+          { name: "Final", score: "1–0 (pro)", opp: "Holanda" }
+        ]
+      },
+      2014: {
+        nation: "Alemanha", flag: "🇩🇪",
+        stages: [
+          { name: "Grupo", score: "4–0", opp: "Portugal" },
+          { name: "Grupo", score: "2–2", opp: "Gana" },
+          { name: "Grupo", score: "1–0", opp: "EUA" },
+          { name: "Oitavas", score: "2–1 (pro)", opp: "Argélia" },
+          { name: "Quartas", score: "1–0", opp: "França" },
+          { name: "Semifinal", score: "7–1", opp: "Brasil" },
+          { name: "Final", score: "1–0 (pro)", opp: "Argentina" }
+        ]
+      },
+      2018: {
+        nation: "França", flag: "🇫🇷",
+        stages: [
+          { name: "Grupo", score: "2–1", opp: "Austrália" },
+          { name: "Grupo", score: "1–0", opp: "Peru" },
+          { name: "Grupo", score: "0–0", opp: "Dinamarca" },
+          { name: "Oitavas", score: "4–3", opp: "Argentina" },
+          { name: "Quartas", score: "2–0", opp: "Uruguai" },
+          { name: "Semifinal", score: "1–0", opp: "Bélgica" },
+          { name: "Final", score: "4–2", opp: "Croácia" }
+        ]
+      },
+      2022: {
+        nation: "Argentina", flag: "🇦🇷",
+        stages: [
+          { name: "Grupo", score: "1–2", opp: "Arábia Saudita" },
+          { name: "Grupo", score: "2–0", opp: "México" },
+          { name: "Grupo", score: "2–0", opp: "Polônia" },
+          { name: "Oitavas", score: "2–1", opp: "Austrália" },
+          { name: "Quartas", score: "2–2 (4–3 pen)", opp: "Holanda" },
+          { name: "Semifinal", score: "3–0", opp: "Croácia" },
+          { name: "Final", score: "3–3 (4–2 pen)", opp: "França" }
+        ]
+      },
+      1958: {
+        nation: "Brasil", flag: "🇧🇷",
+        stages: [
+          { name: "Grupo", score: "3–0", opp: "Áustria" },
+          { name: "Grupo", score: "0–0", opp: "Inglaterra" },
+          { name: "Grupo", score: "2–0", opp: "URSS" },
+          { name: "Quartas", score: "1–0", opp: "País de Gales" },
+          { name: "Semifinal", score: "5–2", opp: "França" },
+          { name: "Final", score: "5–2", opp: "Suécia" }
+        ]
+      },
+      1966: {
+        nation: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+        stages: [
+          { name: "Grupo", score: "0–0", opp: "Uruguai" },
+          { name: "Grupo", score: "2–0", opp: "México" },
+          { name: "Grupo", score: "2–0", opp: "França" },
+          { name: "Quartas", score: "1–0", opp: "Argentina" },
+          { name: "Semifinal", score: "2–1", opp: "Portugal" },
+          { name: "Final", score: "4–2 (pro)", opp: "Alemanha Oc." }
+        ]
+      }
+    };
+
+    const balls = [
+      { year: 1930, name: "T-Model", emoji: "⚽" },
+      { year: 1934, name: "Federale 102", emoji: "⚽" },
+      { year: 1938, name: "Allen", emoji: "⚽" },
+      { year: 1950, name: "Duplo T", emoji: "⚽" },
+      { year: 1954, name: "Swiss World Champion", emoji: "⚽" },
+      { year: 1958, name: "Top Star", emoji: "⚽" },
+      { year: 1962, name: "Mr. Crack", emoji: "⚽" },
+      { year: 1966, name: "Challenge 4-Star", emoji: "⚽" },
+      { year: 1970, name: "Telstar", emoji: "⚫⚪" },
+      { year: 1974, name: "Telstar Durlast", emoji: "⚫⚪" },
+      { year: 1978, name: "Tango", emoji: "⚫⚪" },
+      { year: 1982, name: "Tango España", emoji: "⚫⚪" },
+      { year: 1986, name: "Azteca", emoji: "⚽" },
+      { year: 1990, name: "Etrusco Unico", emoji: "⚽" },
+      { year: 1994, name: "Questra", emoji: "⚽" },
+      { year: 1998, name: "Tricolore", emoji: "🇫🇷" },
+      { year: 2002, name: "Fevernova", emoji: "🔥" },
+      { year: 2006, name: "Teamgeist", emoji: "⚽" },
+      { year: 2010, name: "Jabulani", emoji: "⚽" },
+      { year: 2014, name: "Brazuca", emoji: "🇧🇷" },
+      { year: 2018, name: "Telstar 18", emoji: "⚫⚪" },
+      { year: 2022, name: "Al Rihla", emoji: "✈️" },
+      { year: 2026, name: "Trionda", emoji: "🌊" }
+    ];
+
+    const stadiums = [
+      { name: "Estádio Centenário", year: "1930 · Montevidéu", emoji: "🏟️" },
+      { name: "Maracanã", year: "1950 · Rio de Janeiro", emoji: "🏟️" },
+      { name: "Wembley", year: "1966 · Londres", emoji: "🏟️" },
+      { name: "Estádio Azteca", year: "1970/86 · Cidade do México", emoji: "🏟️" },
+      { name: "Olympiastadion", year: "1974 · Munique", emoji: "🏟️" },
+      { name: "Monumental", year: "1978 · Buenos Aires", emoji: "🏟️" },
+      { name: "Santiago Bernabéu", year: "1982 · Madrid", emoji: "🏟️" },
+      { name: "Rose Bowl", year: "1994 · Pasadena", emoji: "🏟️" },
+      { name: "Stade de France", year: "1998 · Saint-Denis", emoji: "🏟️" },
+      { name: "Yokohama / Seoul", year: "2002", emoji: "🏟️" },
+      { name: "Olympiastadion Berlin", year: "2006", emoji: "🏟️" },
+      { name: "Soccer City", year: "2010 · Joanesburgo", emoji: "🏟️" },
+      { name: "Maracanã", year: "2014 · Rio", emoji: "🏟️" },
+      { name: "Luzhniki", year: "2018 · Moscou", emoji: "🏟️" },
+      { name: "Lusail Stadium", year: "2022 · Catar", emoji: "🏟️" },
+      { name: "MetLife Stadium", year: "2026 · Nova Jersey", emoji: "🏟️" }
+    ];
+
+    // ===== RENDER CHAMPIONS =====
+    const grid = document.getElementById('championsGrid');
+    champions.forEach(c => {
+      const card = document.createElement('div');
+      card.className = 'champion-card';
+      card.innerHTML = `
+        <div class="year">${c.year}</div>
+        <span class="flag">${c.flag}</span>
+        <div class="nation">${c.nation}</div>
+        <div class="titles">${c.titles} título${c.titles > 1 ? 's' : ''}</div>
+      `;
+      grid.appendChild(card);
+    });
+
+    // ===== PATH SELECTOR =====
+    const pathSel = document.getElementById('pathSelector');
+    const pathDisp = document.getElementById('pathDisplay');
+    Object.keys(paths).sort((a,b) => b - a).forEach(year => {
+      const btn = document.createElement('button');
+      btn.className = 'path-btn';
+      btn.textContent = year;
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.path-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        showPath(year);
+      });
+      pathSel.appendChild(btn);
+    });
+
+    function showPath(year) {
+      const p = paths[year];
+      pathDisp.innerHTML = `
+        <div class="path-header">
+          <span class="flag">${p.flag}</span>
+          <div>
+            <h3>${p.nation} · ${year}</h3>
+            <span>Caminho até o título</span>
+          </div>
+        </div>
+        <div class="path-stages">
+          ${p.stages.map((s, i) => `
+            <div class="stage ${i === p.stages.length - 1 ? 'final' : ''}">
+              <div class="stage-name">${s.name}</div>
+              <div class="score">${s.score}</div>
+              <div class="opp">vs ${s.opp}</div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    // ===== GALLERY =====
+    const galleryGrid = document.getElementById('galleryGrid');
+    let currentTab = 'balls';
+
+    function renderGallery(tab) {
+      galleryGrid.innerHTML = '';
+      const data = tab === 'balls' ? balls : stadiums;
+      data.forEach(item => {
+        const el = document.createElement('div');
+        el.className = 'gallery-item';
+        el.innerHTML = `
+          <div class="visual">${item.emoji || '⚽'}</div>
+          <div class="name">${item.name}</div>
+          <div class="year">${item.year || ''}</div>
+        `;
+        galleryGrid.appendChild(el);
+      });
+    }
+    renderGallery('balls');
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentTab = btn.dataset.tab;
+        renderGallery(currentTab);
+      });
+    });
+
+    // ===== COUNTERS & BARS =====
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          if (entry.target.querySelector('.number[data-count]')) {
+            animateCounters(entry.target);
+          }
+          if (entry.target.querySelector('.bar-fill')) {
+            entry.target.querySelectorAll('.bar-fill').forEach(bar => {
+              bar.style.width = bar.dataset.width + '%';
+            });
+          }
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    function animateCounters(container) {
+      container.querySelectorAll('.number[data-count]').forEach(el => {
+        const target = +el.dataset.count;
+        let current = 0;
+        const step = Math.ceil(target / 40);
+        const timer = setInterval(() => {
+          current += step;
+          if (current >= target) {
+            el.textContent = target;
+            clearInterval(timer);
+          } else {
+            el.textContent = current;
+          }
+        }, 30);
+      });
+    }
+
+    // ===== NAV =====
+    const nav = document.getElementById('nav');
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+
+    const sections = document.querySelectorAll('section[id]');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 200) current = s.id;
+      });
+      document.querySelectorAll('.nav-links a').forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    });
+
+    // ===== MINI-GAME: PENALTY =====
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const scoreEl = document.getElementById('score');
+    const attemptsEl = document.getElementById('attempts');
+    const accuracyEl = document.getElementById('accuracy');
+    const gameMsg = document.getElementById('gameMsg');
+    const kickBtn = document.getElementById('kickBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    let score = 0, attempts = 0;
+    let gkX = 320, gkDir = 1, gkSpeed = 3;
+    let ballY = 300, ballX = 320, ballActive = false;
+    let power = 0, powerDir = 1, shooting = false;
+    let result = null;
+    let animId;
+
+    function resizeCanvas() {
+      const maxW = Math.min(640, window.innerWidth - 60);
+      canvas.style.width = maxW + 'px';
+      canvas.style.height = (maxW * 0.5625) + 'px';
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function drawField() {
+      ctx.fillStyle = '#0d1a0d';
+      ctx.fillRect(0, 0, 640, 360);
+
+      ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+      ctx.lineWidth = 2;
+      for (let i = 0; i < 8; i++) {
+        ctx.beginPath();
+        ctx.moveTo(0, 40 + i * 40);
+        ctx.lineTo(640, 40 + i * 40);
+        ctx.stroke();
+      }
+
+      ctx.strokeStyle = '#f5f5f7';
+      ctx.lineWidth = 6;
+      ctx.beginPath();
+      ctx.moveTo(160, 40);
+      ctx.lineTo(160, 160);
+      ctx.lineTo(480, 160);
+      ctx.lineTo(480, 40);
+      ctx.stroke();
+
+      ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+      ctx.lineWidth = 1;
+      for (let x = 170; x < 480; x += 20) {
+        ctx.beginPath();
+        ctx.moveTo(x, 40);
+        ctx.lineTo(x, 160);
+        ctx.stroke();
+      }
+      for (let y = 50; y < 160; y += 15) {
+        ctx.beginPath();
+        ctx.moveTo(160, y);
+        ctx.lineTo(480, y);
+        ctx.stroke();
+      }
+
+      ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(160, 160);
+      ctx.lineTo(480, 160);
+      ctx.stroke();
+    }
+
+    function drawGK() {
+      ctx.fillStyle = '#e63946';
+      ctx.fillRect(gkX - 25, 100, 50, 50);
+      ctx.beginPath();
+      ctx.arc(gkX, 90, 15, 0, Math.PI * 2);
+      ctx.fillStyle = '#f5d0a9';
+      ctx.fill();
+      ctx.fillStyle = '#e63946';
+      ctx.fillRect(gkX - 40, 110, 15, 30);
+      ctx.fillRect(gkX + 25, 110, 15, 30);
+    }
+
+    function drawBall() {
+      ctx.beginPath();
+      ctx.arc(ballX, ballY, 12, 0, Math.PI * 2);
+      ctx.fillStyle = '#f5f5f7';
+      ctx.fill();
+      ctx.strokeStyle = '#333';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
+
+    function drawPowerBar() {
+      if (!shooting && !ballActive) {
+        ctx.fillStyle = 'rgba(0,0,0,0.5)';
+        ctx.fillRect(220, 320, 200, 16);
+        ctx.fillStyle = power > 70 ? '#e63946' : power > 40 ? '#d4af37' : '#2ecc71';
+        ctx.fillRect(220, 320, power * 2, 16);
+        ctx.strokeStyle = '#f5f5f7';
+        ctx.strokeRect(220, 320, 200, 16);
+      }
+    }
+
+    function update() {
+      if (!ballActive && !result) {
+        gkX += gkDir * gkSpeed;
+        if (gkX > 450 || gkX < 190) gkDir *= -1;
+
+        if (shooting) {
+          power += powerDir * 2.5;
+          if (power >= 100 || power <= 0) powerDir *= -1;
+        }
+      }
+
+      if (ballActive) {
+        ballY -= 8;
+        if (power < 35) ballX -= 1.5;
+        else if (power > 75) ballX += 1.5;
+
+        if (ballY <= 140) {
+          ballActive = false;
+          const dist = Math.abs(ballX - gkX);
+          if (dist < 40) {
+            result = 'save';
+            gameMsg.textContent = '🧤 DEFENDIDO! Tente novamente.';
+            gameMsg.style.color = 'var(--accent)';
+          } else if (ballX > 165 && ballX < 475) {
+            result = 'goal';
+            score++;
+            gameMsg.textContent = '⚽ GOOOOL! Que precisão!';
+            gameMsg.style.color = 'var(--success)';
+          } else {
+            result = 'miss';
+            gameMsg.textContent = '❌ Para fora! Ajuste o timing.';
+            gameMsg.style.color = 'var(--accent)';
+          }
+          attempts++;
+          updateStats();
+          setTimeout(resetBall, 1500);
+        }
+      }
+
+      drawField();
+      drawGK();
+      drawBall();
+      drawPowerBar();
+      animId = requestAnimationFrame(update);
+    }
+
+    function updateStats() {
+      scoreEl.textContent = score;
+      attemptsEl.textContent = attempts;
+      accuracyEl.textContent = attempts ? Math.round((score / attempts) * 100) + '%' : '0%';
+    }
+
+    function resetBall() {
+      ballY = 300;
+      ballX = 320;
+      power = 0;
+      powerDir = 1;
+      shooting = false;
+      ballActive = false;
+      result = null;
+      gameMsg.textContent = 'Clique ou toque para chutar no momento certo!';
+      gameMsg.style.color = 'var(--gold-light)';
+      gkSpeed = 2.5 + Math.random() * 2.5;
+    }
+
+    function startKick() {
+      if (ballActive || result) return;
+      if (!shooting) {
+        shooting = true;
+        power = 0;
+        powerDir = 1;
+        gameMsg.textContent = 'Segure... solte no momento certo!';
+      } else {
+        shooting = false;
+        ballActive = true;
+      }
+    }
+
+    canvas.addEventListener('click', startKick);
+    canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startKick(); });
+    kickBtn.addEventListener('click', startKick);
+    resetBtn.addEventListener('click', () => {
+      score = 0; attempts = 0;
+      updateStats();
+      resetBall();
+    });
+
+    update();
+  </script>
 </body>
 </html>
-
