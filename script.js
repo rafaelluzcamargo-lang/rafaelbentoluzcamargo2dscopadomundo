@@ -278,13 +278,13 @@ const paths = {
   2026: {
     nation: "Espanha", flag: "🇪🇸",
     stages: [
-      { name: "Grupo", score: "3–1", opp: "Croácia" },
-      { name: "Grupo", score: "1–0", opp: "Canadá" },
-      { name: "Grupo", score: "2–1", opp: "Japão" },
-      { name: "Oitavas de 32", score: "2–0", opp: "Suíça" },
-      { name: "Oitavas", score: "1–0", opp: "Alemanha" },
-      { name: "Quartas", score: "2–1", opp: "França" },
-      { name: "Semifinal", score: "2–0", opp: "Brasil" },
+      { name: "Grupo", score: "3–1", opp: "Cabo Verde" },
+      { name: "Grupo", score: "1–0", opp: "Arabia Saudita" },
+      { name: "Grupo", score: "2–1", opp: "Uruguai" },
+      { name: "Oitavas de 32", score: "2–0", opp: "Áustria" },
+      { name: "Oitavas", score: "1–0", opp: "Portugal" },
+      { name: "Quartas", score: "2–1", opp: "Bélgica" },
+      { name: "Semifinal", score: "2–0", opp: "França" },
       { name: "Final", score: "1–0 (pro)", opp: "Argentina" }
     ]
   }
