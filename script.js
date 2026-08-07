@@ -21,10 +21,33 @@ const champions = [
   { year: 2010, nation: "Espanha", flag: "🇪🇸", titles: 2 },
   { year: 2014, nation: "Alemanha", flag: "🇩🇪", titles: 4 },
   { year: 2018, nation: "França", flag: "🇫🇷", titles: 2 },
-  { year: 2022, nation: "Argentina", flag: "🇦🇷", titles: 3 }
+  { year: 2022, nation: "Argentina", flag: "🇦🇷", titles: 3 },
+  { year: 2026, nation: "Espanha", flag: "🇪🇸", titles: 2 }
 ];
 
 const paths = {
+  1958: {
+    nation: "Brasil", flag: "🇧🇷",
+    stages: [
+      { name: "Grupo", score: "3–0", opp: "Áustria" },
+      { name: "Grupo", score: "0–0", opp: "Inglaterra" },
+      { name: "Grupo", score: "2–0", opp: "URSS" },
+      { name: "Quartas", score: "1–0", opp: "País de Gales" },
+      { name: "Semifinal", score: "5–2", opp: "França" },
+      { name: "Final", score: "5–2", opp: "Suécia" }
+    ]
+  },
+  1966: {
+    nation: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    stages: [
+      { name: "Grupo", score: "0–0", opp: "Uruguai" },
+      { name: "Grupo", score: "2–0", opp: "México" },
+      { name: "Grupo", score: "2–0", opp: "França" },
+      { name: "Quartas", score: "1–0", opp: "Argentina" },
+      { name: "Semifinal", score: "2–1", opp: "Portugal" },
+      { name: "Final", score: "4–2 (pro)", opp: "Alemanha Oc." }
+    ]
+  },
   1970: {
     nation: "Brasil", flag: "🇧🇷",
     stages: [
@@ -120,40 +143,17 @@ const paths = {
       { name: "Final", score: "3–3 (4–2 pen)", opp: "França" }
     ]
   },
-
   2026: {
-  nation: "Espanha", flag: "🇪🇸",
-  stages: [
-    { name: "Grupo", score: "3–1", opp: "Croácia" },
-    { name: "Grupo", score: "1–0", opp: "Canadá" },
-    { name: "Grupo", score: "2–1", opp: "Japão" },
-    { name: "Oitavas de 32", score: "2–0", opp: "Suíça" },
-    { name: "Oitavas", score: "1–0", opp: "Alemanha" },
-    { name: "Quartas", score: "2–1", opp: "França" },
-    { name: "Semifinal", score: "2–0", opp: "Brasil" },
-    { name: "Final", score: "1–0 (pro)", opp: "Argentina" }
-  ]
-},
-  1958: {
-    nation: "Brasil", flag: "🇧🇷",
+    nation: "Espanha", flag: "🇪🇸",
     stages: [
-      { name: "Grupo", score: "3–0", opp: "Áustria" },
-      { name: "Grupo", score: "0–0", opp: "Inglaterra" },
-      { name: "Grupo", score: "2–0", opp: "URSS" },
-      { name: "Quartas", score: "1–0", opp: "País de Gales" },
-      { name: "Semifinal", score: "5–2", opp: "França" },
-      { name: "Final", score: "5–2", opp: "Suécia" }
-    ]
-  },
-  1966: {
-    nation: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    stages: [
-      { name: "Grupo", score: "0–0", opp: "Uruguai" },
-      { name: "Grupo", score: "2–0", opp: "México" },
-      { name: "Grupo", score: "2–0", opp: "França" },
-      { name: "Quartas", score: "1–0", opp: "Argentina" },
-      { name: "Semifinal", score: "2–1", opp: "Portugal" },
-      { name: "Final", score: "4–2 (pro)", opp: "Alemanha Oc." }
+      { name: "Grupo", score: "3–1", opp: "Croácia" },
+      { name: "Grupo", score: "1–0", opp: "Canadá" },
+      { name: "Grupo", score: "2–1", opp: "Japão" },
+      { name: "Oitavas de 32", score: "2–0", opp: "Suíça" },
+      { name: "Oitavas", score: "1–0", opp: "Alemanha" },
+      { name: "Quartas", score: "2–1", opp: "França" },
+      { name: "Semifinal", score: "2–0", opp: "Brasil" },
+      { name: "Final", score: "1–0 (pro)", opp: "Argentina" }
     ]
   }
 };
