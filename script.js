@@ -120,6 +120,20 @@ const paths = {
       { name: "Final", score: "3–3 (4–2 pen)", opp: "França" }
     ]
   },
+
+  2026: {
+  nation: "Espanha", flag: "🇪🇸",
+  stages: [
+    { name: "Grupo", score: "3–1", opp: "Croácia" },
+    { name: "Grupo", score: "1–0", opp: "Canadá" },
+    { name: "Grupo", score: "2–1", opp: "Japão" },
+    { name: "Oitavas de 32", score: "2–0", opp: "Suíça" },
+    { name: "Oitavas", score: "1–0", opp: "Alemanha" },
+    { name: "Quartas", score: "2–1", opp: "França" },
+    { name: "Semifinal", score: "2–0", opp: "Brasil" },
+    { name: "Final", score: "1–0 (pro)", opp: "Argentina" }
+  ]
+},
   1958: {
     nation: "Brasil", flag: "🇧🇷",
     stages: [
